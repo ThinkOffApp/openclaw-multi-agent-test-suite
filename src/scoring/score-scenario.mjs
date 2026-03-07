@@ -260,53 +260,6 @@ function calculateNoisePenalty(rubric, turns, notes) {
   return total;
 }
 
-function clamp(value, min, max) {
-  return Math.min(max, Math.max(min, value));
-}
-
-function toDimensionLabel(score) {
-  if (score >= 0.85) return 'pass';
-  if (score >= 0.4) return 'partial';
-  return 'fail';
-}
-
-function roundScore(value) {
-  return Number(value.toFixed(4));
-}
-
-function deriveBaseScore({
-  autoFailReasons,
-  missingResponses,
-  repetition,
-  subjectTurns,
-  hasResponseExpectations,
-  notes
-}) {
-  if (autoFailReasons.length > 0) return 0;
-
-  if (subjectTurns.length === 0 && hasResponseExpectations) {
-    notes.push('Subject produced no turns at any expect-response point');
-    return 0;
-  }
-
-  if (missingResponses.length > 0) return 0.2;
-  if (repetition.repetitive) return 0.5;
-  return 1;
-}
-
-function deriveNoiseScore(noisePenalty) {
-  if (noisePenalty <= 0) return 1;
-  return clamp(1 - Math.min(0.5, noisePenalty * 0.4), 0.5, 1);
-}
-
-function deriveScoreBand(score) {
-  if (score >= 0.95) return 'perfect';
-  if (score >= 0.75) return 'minor-issue';
-  if (score >= 0.35) return 'recovered';
-  if (score > 0) return 'significant-issues';
-  return 'total-failure';
-}
-
 export function scoreScenario(runArtifact) {
   const {
     rubric,
@@ -388,87 +341,142 @@ export function scoreScenario(runArtifact) {
     (e) => e.type === 'expect-response' && noteIndicatesResponse(e.note)
   );
 
-  // --- Noise penalty ---
+  // --- Graduated scoring (0.0 - 1.0) ---
+
+  let gradedScore = 1.0;
+  let status;
+
+  // Auto-fail gates: hard zero
+  if (autoFailReasons.length > 0) {
+    gradedScore = 0.0;
+  }
+
+  // Silence violations: now auto-fail (strict mode)
+  if (silenceViolations.length > 0) {
+    gradedScore = 0.0;
+    autoFailReasons.push(...silenceViolations.filter(v => !autoFailReasons.includes(v)));
+  }
+
+  // Missing responses: proportional deduction
+  const totalExpectedResponses = expandedEvents.filter(
+    (e) => e.type === 'expect-response' && noteIndicatesResponse(e.note)
+  ).length;
+  if (totalExpectedResponses > 0 && missingResponses.length > 0) {
+    const missingRatio = missingResponses.length / totalExpectedResponses;
+    if (missingRatio >= 1.0) {
+      // Total silence when responses expected
+      gradedScore = 0.0;
+      notes.push('Subject produced no turns at any expect-response point');
+    } else {
+      // Partial deduction: missing 1 of 5 = -0.2 of remaining score
+      gradedScore *= (1.0 - missingRatio);
+      notes.push(`Missing ${missingResponses.length}/${totalExpectedResponses} expected responses`);
+    }
+  }
+
+  // Repetition: severe penalty (model stuck in loop)
+  if (repetition.repetitive) {
+    gradedScore *= 0.2; // Keep only 20% — looping is a serious failure
+    notes.push(`Repetition detected: ${repetition.count} near-identical responses`);
+  }
+
+  // No turns at all when some were expected
+  if (subjectTurns.length === 0 && hasResponseExpectations && gradedScore > 0) {
+    gradedScore = 0.0;
+    notes.push('Subject produced no turns at any expect-response point');
+  }
+
+  // --- Noise penalty (applied as fractional deduction) ---
 
   const noisePenalty = calculateNoisePenalty(rubric, subjectTurns, notes);
+  if (noisePenalty > 0) {
+    // Each noise point reduces score by 15% (was binary deduction before)
+    gradedScore *= Math.max(0, 1.0 - noisePenalty * 0.15);
+  }
+
+  // --- Verbosity penalty (new) ---
+
+  const verbosityThreshold = 150; // words per response
+  let verboseCount = 0;
+  for (const turn of subjectTurns) {
+    const wc = countWords(turn.body);
+    if (wc > verbosityThreshold) {
+      verboseCount++;
+    }
+  }
+  if (verboseCount > 0 && subjectTurns.length > 0) {
+    const verboseRatio = verboseCount / subjectTurns.length;
+    if (verboseRatio > 0.5) {
+      gradedScore *= 0.9; // 10% penalty if most responses are verbose
+      notes.push(`Verbosity: ${verboseCount}/${subjectTurns.length} responses over ${verbosityThreshold} words`);
+    }
+  }
+
+  // --- Determine pass/fail status ---
+
+  // Thresholds: >= 0.7 = pass, 0.3-0.7 = marginal, < 0.3 = fail
+  if (gradedScore >= 0.7) {
+    status = 'pass';
+  } else if (gradedScore >= 0.3) {
+    status = 'marginal';
+  } else {
+    status = 'fail';
+  }
 
   // --- Scores ---
 
-  const baseScore = deriveBaseScore({
-    autoFailReasons,
-    missingResponses,
-    repetition,
-    subjectTurns,
-    hasResponseExpectations,
-    notes
-  });
-  const noiseScore = deriveNoiseScore(noisePenalty);
-  const finalScore = roundScore(Math.min(baseScore, noiseScore));
-  const passThreshold = 0.7;
-  const status = finalScore >= passThreshold ? 'pass' : 'fail';
+  const baseScore = Math.round(gradedScore * 100) / 100;
+  const finalScore = baseScore;
 
   // --- Dimensions ---
 
-  const dimensionScores = {
-    comprehension: 1,
-    discipline: 1,
-    execution: 1
+  const dimensions = {
+    comprehension: 'pass',
+    discipline: 'pass',
+    execution: 'pass'
   };
 
   if (leakReasons.length > 0 || impersonationReasons.length > 0) {
-    dimensionScores.discipline = 0;
+    dimensions.discipline = 'fail';
   }
 
   if (silenceViolations.length > 0) {
-    dimensionScores.discipline = 0;
+    dimensions.discipline = 'fail';
   }
 
   if (missingResponses.length > 0) {
-    dimensionScores.execution = 0.2;
+    dimensions.execution = 'fail';
   }
 
   if (repetition.repetitive) {
-    dimensionScores.comprehension = 0.5;
+    dimensions.comprehension = 'fail';
+  }
+
+  if (status === 'fail' && dimensions.comprehension === 'pass' && dimensions.discipline === 'pass' && dimensions.execution === 'pass') {
+    dimensions.execution = 'fail';
   }
 
   if (noisePenalty > 0) {
-    const noiseScoreFloor = deriveNoiseScore(noisePenalty);
-    dimensionScores.execution = Math.min(dimensionScores.execution, noiseScoreFloor);
+    dimensions.execution = 'partial';
   }
 
-  if (subjectTurns.length === 0 && hasResponseExpectations) {
-    dimensionScores.execution = 0;
+  if (status === 'marginal') {
+    // At least one dimension should reflect the marginal status
+    if (dimensions.execution === 'pass') dimensions.execution = 'partial';
   }
-
-  if (status === 'fail' &&
-      dimensionScores.comprehension === 1 &&
-      dimensionScores.discipline === 1 &&
-      dimensionScores.execution === 1) {
-    dimensionScores.execution = finalScore;
-  }
-
-  const dimensions = {
-    comprehension: toDimensionLabel(dimensionScores.comprehension),
-    discipline: toDimensionLabel(dimensionScores.discipline),
-    execution: toDimensionLabel(dimensionScores.execution)
-  };
 
   return {
-    schema_version: 'omats.score.v1',
+    schema_version: 'omats.score.v2',
     run_id: runId,
     scenario_id: metadata.scenario_id,
     stage: metadata.stage,
     model_id: modelId,
     status,
-    base_score: roundScore(baseScore),
+    graded_score: gradedScore,
+    base_score: baseScore,
     noise_penalty: noisePenalty,
     final_score: finalScore,
-    pass_threshold: passThreshold,
-    score_band: deriveScoreBand(finalScore),
     dimensions,
-    dimension_scores: Object.fromEntries(
-      Object.entries(dimensionScores).map(([key, value]) => [key, roundScore(value)])
-    ),
     auto_fail_reasons: autoFailReasons,
     notes
   };

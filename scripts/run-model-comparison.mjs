@@ -122,17 +122,19 @@ for (const scenario of scenarios) {
     });
 
     const score = scoreScenario(artifact);
-    const statusIcon = score.status === 'pass' ? 'PASS' : 'FAIL';
+    const statusIcon = score.status === 'pass' ? 'PASS' : score.status === 'marginal' ? 'MARG' : 'FAIL';
 
     if (score.status === 'pass') passCount++;
     else failCount++;
 
+    const gs = score.graded_score !== undefined ? ` [${score.graded_score.toFixed(2)}]` : '';
     const np = score.noise_penalty > 0 ? ` (np=${score.noise_penalty})` : '';
-    console.error(`  ${statusIcon}  ${label}${np}`);
+    console.error(`  ${statusIcon}  ${label}${gs}${np}`);
 
     results.push({
       scenario: label,
       status: score.status,
+      graded_score: score.graded_score,
       score: score.final_score,
       noise_penalty: score.noise_penalty,
       auto_fail: score.auto_fail_reasons

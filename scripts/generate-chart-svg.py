@@ -7,8 +7,9 @@ import os
 # Model data: (name, s3_pass, s3_total, s4_pass, s4_total, s5_pass, s5_total)
 MODELS = [
     ("GPT-5.4",        4, 5, 13, 13, 10, 10),
-    ("Grok 3",         5, 5, 13, 13,  9, 10),
     ("Mistral Large",  5, 5, 13, 13,  9, 10),
+    ("Gemini 2.5 Pro", 5, 5, 12, 13, 10, 10),
+    ("Grok 3",         5, 5, 13, 13,  9, 10),
     ("GPT-4o",         4, 5, 12, 13,  9, 10),
     ("Qwen Max",       4, 5, 12, 13,  9, 10),
     ("Qwen 3.5-27B",   3, 5, 12, 13,  9, 10),

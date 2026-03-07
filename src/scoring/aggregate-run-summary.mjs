@@ -29,25 +29,26 @@ export function aggregateRunSummary(scoreResults) {
   };
 
   let autoFailCount = 0;
-  let totalFinalScore = 0;
-  let totalPassRate = 0;
+  let totalGradedScore = 0;
 
   for (const score of scoreResults) {
     const stageKey = String(score.stage);
     if (!stageTotals[stageKey]) {
-      stageTotals[stageKey] = { pass: 0, fail: 0 };
+      stageTotals[stageKey] = { pass: 0, marginal: 0, fail: 0, graded_total: 0, count: 0 };
     }
 
-    stageTotals[stageKey][score.status] = (stageTotals[stageKey][score.status] || 0) + 1;
+    const st = stageTotals[stageKey];
+    st[score.status] = (st[score.status] || 0) + 1;
+    st.graded_total += score.graded_score ?? (score.status === 'pass' ? 1 : 0);
+    st.count += 1;
+
+    totalGradedScore += score.graded_score ?? (score.status === 'pass' ? 1 : 0);
 
     for (const key of Object.keys(dimensionAccumulator)) {
-      const dimensionValue = score.dimension_scores?.[key] ?? normalizeDimensionValue(score.dimensions?.[key]);
-      dimensionAccumulator[key] += dimensionValue;
+      dimensionAccumulator[key] += normalizeDimensionValue(score.dimensions?.[key]);
     }
 
     autoFailCount += Array.isArray(score.auto_fail_reasons) ? score.auto_fail_reasons.length : 0;
-    totalFinalScore += score.final_score || 0;
-    totalPassRate += score.pass_rate ?? (score.status === 'pass' ? 1 : 0);
   }
 
   const scenarioCount = scoreResults.length;
@@ -55,13 +56,18 @@ export function aggregateRunSummary(scoreResults) {
     Object.entries(dimensionAccumulator).map(([key, value]) => [key, Number((value / scenarioCount).toFixed(4))])
   );
 
+  // Compute per-stage averages
+  for (const st of Object.values(stageTotals)) {
+    st.graded_average = st.count > 0 ? Number((st.graded_total / st.count).toFixed(4)) : 0;
+  }
+
   return {
-    schema_version: 'omats.run-summary.v1',
+    schema_version: 'omats.run-summary.v2',
     run_id: runId,
     model_id: modelId,
     scenario_count: scenarioCount,
-    average_final_score: Number((totalFinalScore / scenarioCount).toFixed(4)),
-    average_pass_rate: Number((totalPassRate / scenarioCount).toFixed(4)),
+    graded_total: Number(totalGradedScore.toFixed(2)),
+    graded_average: Number((totalGradedScore / scenarioCount).toFixed(4)),
     stage_totals: stageTotals,
     dimension_totals: dimensionTotals,
     auto_fail_count: autoFailCount
