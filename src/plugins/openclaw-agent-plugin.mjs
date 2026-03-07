@@ -130,7 +130,7 @@ export function createOpenClawAgentPlugin(options) {
         if (bootstrapped) return;
         const response = await callAgent(buildBootstrapPrompt(input));
         const text = extractText(response);
-        if (text !== READY) {
+        if (!text || !text.includes(READY)) {
           throw new Error(`OpenClaw bootstrap failed: expected ${READY}, got ${text || '[empty]'}`);
         }
         bootstrapped = true;
