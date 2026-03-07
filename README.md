@@ -10,7 +10,7 @@ OMATS tests models in realistic multi-agent room scenarios and produces a compar
 
 ## The 5 Stages of Model Capability
 
-Based on the [Petrus Pennanen framework](https://x.com/petruspennanen/status/2027489623220347281) (Feb 2026). Each stage is progressively more demanding:
+Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623220347281) (Feb 2026). Each stage is progressively more demanding:
 
 | Stage | Name | Description |
 |-------|------|-------------|
