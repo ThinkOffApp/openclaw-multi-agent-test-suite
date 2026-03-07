@@ -83,10 +83,28 @@ From running a 9-agent fleet daily on one Mac mini:
 ## Getting Started
 
 ```bash
-# Coming soon
-npm install -g openclaw-multi-agent-test-suite
-omats run --model <provider/model-name>
+# validate the committed scenario pack
+npm run validate
+
+# runner CLI still in progress
+# omats run --model <provider/model-name>
 ```
+
+## Repo Layout
+
+```text
+docs/openclaw-runner-contract.md   Contract between scenarios, runner, and plugins
+schemas/                           Machine-readable JSON schemas for OMATS artifacts
+scenarios/stage3-5/...             Scenario packs: metadata, transcript, rubric
+scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
+```
+
+## Current Status
+
+- Scenario pack for Stages 3-5 is committed.
+- Runner/plugin contract draft is committed.
+- JSON schemas for capability, metadata, transcript, rubric, observed turn, score, and run summary are committed.
+- `npm run validate` checks scenario-pack structure and explicitly supports `message`, `expect-response`, `tool-result`, and `filler-block`.
 
 ## Built With
 

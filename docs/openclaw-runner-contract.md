@@ -77,6 +77,34 @@ scenarios/<stage>/<scenario-id>/
 }
 ```
 
+Supported transcript event types:
+
+- `message`: inject a scripted room message into the runner.
+- `expect-response`: marks the point where the subject model may respond and where the runner should collect observed turns.
+- `tool-result`: injects the result of a simulated tool call back into the session.
+- `filler-block`: expands one template into `count` synthetic messages at runtime to create long-session pressure without bloating committed JSON.
+
+`filler-block` shape:
+
+```json
+{
+  "id": "evt-003",
+  "type": "filler-block",
+  "count": 30,
+  "template": {
+    "from": "agent:peer-a",
+    "body_pattern": "Technical discussion message #{n} about various topics."
+  }
+}
+```
+
+Runner rules for `filler-block`:
+
+- Expansion is deterministic and ordered.
+- `{n}` is 1-based within the block.
+- Expanded messages are treated as ordinary scripted `message` events for replay and logging.
+- The scorer evaluates only the subject outputs collected after explicit `expect-response` boundaries unless a scenario rubric says otherwise.
+
 `rubric.json`:
 
 ```json
@@ -142,6 +170,8 @@ Rules:
 - The plugin returns only subject outputs caused by that event.
 - The runner timestamps every observed turn itself to keep provider timing differences out of scoring.
 - Deterministic scripted OMATS runs do not depend on external room traffic.
+- The runner must persist enough raw replay output to reconstruct failures after the fact.
+- The runner must reject scenario packs with unsupported event types before execution.
 
 ## Observed Turn Schema
 
@@ -208,6 +238,16 @@ Run aggregate:
   "auto_fail_count": 1
 }
 ```
+
+Recommended scorer behavior:
+
+- `base_score` starts at `1` for pass and `0` for fail.
+- `noise_penalty` is the sum of triggered rubric penalties and should not reduce the score below the repo's configured floor.
+- `final_score` is `base_score - noise_penalty`, clamped by runner policy.
+- `auto_fail_reasons` force `status: "fail"` even if other pass conditions were met.
+- `dimension_totals` in the run summary should be normalized to `0..1` across the executed scenario set.
+
+Machine-readable schema files for the contract live under `schemas/`.
 
 ## Auto-Fail Gates
 

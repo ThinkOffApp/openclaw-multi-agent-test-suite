@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thinkoff.io/schemas/omats.capability.schema.json",
+  "title": "OMATS Capability Profile",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "model_id",
+    "provider",
+    "supports_tools",
+    "supports_streaming",
+    "supports_system_prompt",
+    "supports_json_mode",
+    "max_context_tokens"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omats.capability.v1"
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "supports_tools": {
+      "type": "boolean"
+    },
+    "supports_streaming": {
+      "type": "boolean"
+    },
+    "supports_system_prompt": {
+      "type": "boolean"
+    },
+    "supports_json_mode": {
+      "type": "boolean"
+    },
+    "max_context_tokens": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "openclaw-multi-agent-test-suite",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "scripts": {
+    "validate": "node ./scripts/validate-scenarios.mjs"
+  }
+}

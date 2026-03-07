@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thinkoff.io/schemas/omats.score.schema.json",
+  "title": "OMATS Scenario Score",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "run_id",
+    "scenario_id",
+    "stage",
+    "model_id",
+    "status",
+    "base_score",
+    "noise_penalty",
+    "final_score",
+    "dimensions",
+    "auto_fail_reasons"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omats.score.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": ["pass", "fail"]
+    },
+    "base_score": {
+      "type": "number"
+    },
+    "noise_penalty": {
+      "type": "number"
+    },
+    "final_score": {
+      "type": "number"
+    },
+    "dimensions": {
+      "type": "object",
+      "required": ["comprehension", "discipline", "execution"],
+      "properties": {
+        "comprehension": { "type": "string", "minLength": 1 },
+        "discipline": { "type": "string", "minLength": 1 },
+        "execution": { "type": "string", "minLength": 1 }
+      }
+    },
+    "auto_fail_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

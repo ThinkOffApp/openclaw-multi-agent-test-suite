@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thinkoff.io/schemas/omats.run-summary.schema.json",
+  "title": "OMATS Run Summary",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "run_id",
+    "model_id",
+    "scenario_count",
+    "stage_totals",
+    "dimension_totals",
+    "auto_fail_count"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omats.run-summary.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stage_totals": {
+      "type": "object"
+    },
+    "dimension_totals": {
+      "type": "object"
+    },
+    "auto_fail_count": {
+      "type": "integer",
+      "minimum": 0
+    }
+  }
+}

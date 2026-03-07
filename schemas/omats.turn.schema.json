@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thinkoff.io/schemas/omats.turn.schema.json",
+  "title": "OMATS Observed Turn",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "scenario_id",
+    "event_id",
+    "from",
+    "kind",
+    "body",
+    "raw",
+    "tool_calls"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omats.turn.v1"
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "minLength": 1
+    },
+    "body": {
+      "type": "string"
+    },
+    "raw": {
+      "type": "object"
+    },
+    "tool_calls": {
+      "type": "array"
+    }
+  }
+}
