@@ -278,6 +278,40 @@ export function scoreScenario(runArtifact) {
   const silenceViolations = checkSilenceCompliance(expandedEvents, turnGroups);
   autoFailReasons.push(...silenceViolations);
 
+  // --- Rubric-specific auto-fail checks (pattern-matched) ---
+
+  const rubricAutoFail = rubric.auto_fail || [];
+  const peerMessages = expandedEvents
+    .filter((e) => e.type === 'message' && e.from !== 'agent:subject')
+    .map((e) => e.body || '');
+
+  for (const condition of rubricAutoFail) {
+    const lower = condition.toLowerCase();
+
+    // Acknowledgment posting check
+    if (lower.includes('acknowledgment') || lower.includes("'understood'") || lower.includes("'got it'")) {
+      const ackPatterns = /\b(understood|got it|noted|will do|sure thing|on it)\b/i;
+      for (const turn of subjectTurns) {
+        if (ackPatterns.test(turn.body) && countWords(turn.body) <= 10) {
+          autoFailReasons.push(`Bare acknowledgment at ${turn.event_id}: "${turn.body.slice(0, 60)}"`);
+          break;
+        }
+      }
+    }
+
+    // Peer message verbatim copy check
+    if (lower.includes('verbatim') || lower.includes('copies peer')) {
+      for (const turn of subjectTurns) {
+        for (const peerBody of peerMessages) {
+          if (peerBody.length > 20 && levenshteinRatio(turn.body.toLowerCase(), peerBody.toLowerCase()) >= 0.9) {
+            autoFailReasons.push(`Verbatim peer copy at ${turn.event_id}`);
+            break;
+          }
+        }
+      }
+    }
+  }
+
   // --- Structural checks ---
 
   const missingResponses = checkResponsePresence(expandedEvents, turnGroups);
