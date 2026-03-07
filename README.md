@@ -83,14 +83,26 @@ From running a 9-agent fleet daily on one Mac mini:
 ## Getting Started
 
 ```bash
-# validate the committed scenario pack
+# validate all 20 scenario packs
 npm run validate
 
-# smoke-test the runner skeleton with the bundled mock plugin
+# run the full suite with the mock plugin (run → score → aggregate)
+npm run suite
+
+# run the suite and save all artifacts to a directory
+npm run suite -- --output runs/my-run --stage 4
+
+# run a single scenario
 npm run run:mock
 
-# run a real OpenClaw-backed scenario through a local or gateway agent
-npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent geminimb_trader
+# run a real OpenClaw agent through a scenario
+npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent sally
+
+# score a run artifact
+npm run score -- --input runs/artifact.json --output runs/score.json
+
+# aggregate score files into a run summary
+npm run aggregate:scores -- --input runs/scores/
 ```
 
 ## Repo Layout
@@ -98,26 +110,27 @@ npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent
 ```text
 docs/openclaw-runner-contract.md   Contract between scenarios, runner, and plugins
 examples/                         Mock capability profile for local smoke testing
-schemas/                           Machine-readable JSON schemas for OMATS artifacts
+schemas/                           Machine-readable JSON schemas for all OMATS artifacts
 scenarios/stage3-5/...             Scenario packs: metadata, transcript, rubric
-src/runner/                        Scenario loader and runner skeleton
-src/scoring/                       Score aggregation helpers
-src/plugins/                       Plugin examples and adapter stubs
-scripts/run-scenario.mjs           CLI entrypoint for runner skeleton
-scripts/run-openclaw-scenario.mjs  CLI entrypoint for the real OpenClaw adapter
-scripts/aggregate-scores.mjs       CLI entrypoint for run summary aggregation
-scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
+src/runner/                        Scenario loader and runner
+src/scoring/                       Scorer and run summary aggregation
+src/plugins/                       Mock echo plugin and OpenClaw agent adapter
+scripts/run-scenario.mjs           Run a single scenario with any plugin
+scripts/run-openclaw-scenario.mjs  Run a single scenario through an OpenClaw agent
+scripts/run-suite.mjs              Run all scenarios, score, and aggregate
+scripts/score-scenario.mjs         Score a run artifact against its rubric
+scripts/aggregate-scores.mjs       Aggregate individual scores into a run summary
+scripts/validate-scenarios.mjs     Validate scenario-pack structure
 ```
 
 ## Current Status
 
-- Scenario pack for Stages 3-5 is committed.
-- Runner/plugin contract draft is committed.
-- JSON schemas for capability, metadata, transcript, rubric, observed turn, score, and run summary are committed.
-- `npm run validate` checks scenario-pack structure and explicitly supports `message`, `expect-response`, `tool-result`, and `filler-block`.
-- `npm run run:mock` replays a scenario through the bundled mock plugin and emits an OMATS run artifact.
-- `npm run run:openclaw -- --scenario <path> --agent <agent-id>` replays a scenario through a real OpenClaw agent session.
-- `npm run aggregate:scores -- --input <dir>` aggregates `omats.score.v1` files into an `omats.run-summary.v1` payload.
+- 20 scenario packs for Stages 3-5 committed and validated.
+- Full pipeline working: run → score → aggregate (`npm run suite`).
+- Runner supports mock echo plugin and real OpenClaw agent adapter.
+- Scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), structural response evaluation, repetition detection, and noise penalties.
+- Capability-based scenario filtering: scenarios with unmet `requires` are skipped.
+- JSON schemas for all artifact types committed under `schemas/`.
 
 ## Built With
 
