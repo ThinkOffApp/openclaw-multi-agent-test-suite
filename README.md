@@ -12,13 +12,13 @@ OMATS tests models in realistic multi-agent room scenarios and produces a compar
 
 Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623220347281) (Feb 2026). Each stage is progressively more demanding:
 
-| Stage | Name | Description |
-|-------|------|-------------|
-| 1 | API Use | Pretty easy to sound sensible in a single API call |
-| 2 | IDE Integration | More demanding. Multi-turn context, tool use, file operations |
-| 3 | OpenClaw Agent | Sensible personality, avoids loops, much more demanding |
-| 4 | Multi-Agent Realtime Comms | Avoiding loops, right tone, turn discipline |
-| 5 | Managing Multi-Agent Comms | Agent in team management role, most demanding |
+| Stage | Description | Common Failure Modes | Difficulty |
+|-------|-------------|----------------------|------------|
+| 1. API Use | Single-turn prompt/response. Clear input, clear expected output. No memory or tool use required. | Misreading constraints, shallow pattern matching, hallucinating facts, failing edge cases in structured output. | Low |
+| 2. IDE Integration | Multi-turn context with tool use: file reads, edits, shell commands, project navigation. Must maintain coherence across turns. | Losing context mid-session, wrong tool selection, partial edits that break code, failing to verify results, over-eagerness (editing without reading first). | Moderate |
+| 3. Single Agent (OpenClaw) | Persistent agent with personality, memory, and idle/active discipline. Runs continuously, must know when to act and when to stay silent. | Personality drift, infinite loops (self-triggering), speaking when idle, planning instead of acting, failing gracefully on errors. | High |
+| 4. Multi-Agent Realtime | Multiple agents in a shared room. Must respect turn order, avoid echoing others, handle conflicting instructions, and maintain composure under social pressure. | Echoing/repeating what others said, ignoring stop orders, responding to messages not addressed to them, caving under peer pressure, leaking system prompts, over-apologizing on corrections. | Very High |
+| 5. Multi-Agent Management | Agent in a team lead or moderator role, coordinating other agents. Must delegate, triage, filter noise, and make escalation decisions. | Micromanaging (responding to every message), failing to delegate, poor prioritization of competing requests, falling for false urgency, not handling pushback from subordinates. | Extreme |
 
 ## Coverage
 
