@@ -1,132 +1,111 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="670" viewBox="0 0 680 670">
-<rect width="680" height="670" fill="white"/>
-<text x="340.0" y="30" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">OMATS Multi-Agent Benchmark</text>
-<text x="340.0" y="48" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#7f8c8d">28 scenarios across 3 stages — March 2026</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="690" height="620" viewBox="0 0 690 620">
+<rect width="690" height="620" fill="white"/>
+<text x="345.0" y="30" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="bold" fill="#2c3e50">OMATS Multi-Agent Benchmark</text>
+<text x="345.0" y="48" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#7f8c8d">28 scenarios across 3 stages — graduated scoring — March 2026</text>
 <rect x="140" y="58" width="12" height="12" fill="#2ecc71" rx="2"/>
 <text x="156" y="68" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#2c3e50">Stage 3: Agent</text>
 <rect x="270" y="58" width="12" height="12" fill="#3498db" rx="2"/>
 <text x="286" y="68" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#2c3e50">Stage 4: Multi-Agent</text>
 <rect x="430" y="58" width="12" height="12" fill="#e67e22" rx="2"/>
 <text x="446" y="68" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#2c3e50">Stage 5: Management</text>
-<text x="130" y="95.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">GPT-5.4</text>
+<text x="130" y="95.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Grok 3</text>
 <rect x="140" y="70" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="70" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
-<text x="172.14285714285714" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
-<rect x="204.28571428571428" y="70" width="208.92857142857144" height="40" fill="#3498db" rx="0"/>
-<text x="308.75" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">13</text>
-<rect x="413.2142857142857" y="70" width="160.71428571428572" height="40" fill="#e67e22" rx="0"/>
-<text x="493.57142857142856" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">10</text>
-<rect x="140" y="70" width="433.92857142857144" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="95.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27/28</text>
-<text x="640" y="95.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">96%</text>
+<rect x="140" y="70" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
+<text x="180.17857142857144" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">5</text>
+<rect x="220.35714285714286" y="70" width="206.51785714285714" height="40" fill="#3498db" rx="0"/>
+<text x="323.61607142857144" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">12.8</text>
+<rect x="426.875" y="70" width="160.71428571428572" height="40" fill="#e67e22" rx="0"/>
+<text x="507.2321428571429" y="95.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">10</text>
+<text x="598" y="95.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27.85</text>
+<text x="650" y="95.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">99%</text>
 <text x="130" y="145.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Mistral Large</text>
 <rect x="140" y="120" width="450" height="40" fill="#ecf0f1" rx="4"/>
 <rect x="140" y="120" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
-<text x="180.17857142857144" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
+<text x="180.17857142857144" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">5</text>
 <rect x="220.35714285714286" y="120" width="208.92857142857144" height="40" fill="#3498db" rx="0"/>
-<text x="324.82142857142856" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">13</text>
-<rect x="429.28571428571433" y="120" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="501.6071428571429" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="120" width="433.92857142857144" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="145.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27/28</text>
-<text x="640" y="145.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">96%</text>
-<text x="130" y="195.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Gemini 2.5 Pro</text>
+<text x="324.82142857142856" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">13</text>
+<rect x="429.28571428571433" y="120" width="155.57142857142856" height="40" fill="#e67e22" rx="0"/>
+<text x="507.0714285714286" y="145.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">9.7</text>
+<text x="598" y="145.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27.68</text>
+<text x="650" y="145.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">99%</text>
+<text x="130" y="195.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">GPT-5.4</text>
 <rect x="140" y="170" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="170" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
-<text x="180.17857142857144" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
-<rect x="220.35714285714286" y="170" width="192.85714285714283" height="40" fill="#3498db" rx="0"/>
-<text x="316.7857142857143" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">12</text>
-<rect x="413.21428571428567" y="170" width="160.71428571428572" height="40" fill="#e67e22" rx="0"/>
-<text x="493.57142857142856" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">10</text>
-<rect x="140" y="170" width="433.92857142857144" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="195.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27/28</text>
-<text x="640" y="195.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">96%</text>
-<text x="130" y="245.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Grok 3</text>
+<rect x="140" y="170" width="67.5" height="40" fill="#2ecc71" rx="0"/>
+<text x="173.75" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4.2</text>
+<rect x="207.5" y="170" width="208.92857142857144" height="40" fill="#3498db" rx="0"/>
+<text x="311.9642857142857" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">13</text>
+<rect x="416.42857142857144" y="170" width="160.71428571428572" height="40" fill="#e67e22" rx="0"/>
+<text x="496.78571428571433" y="195.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">10</text>
+<text x="598" y="195.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27.20</text>
+<text x="650" y="195.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">97%</text>
+<text x="130" y="245.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">GPT-4o</text>
 <rect x="140" y="220" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="220" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
-<text x="180.17857142857144" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
-<rect x="220.35714285714286" y="220" width="208.92857142857144" height="40" fill="#3498db" rx="0"/>
-<text x="324.82142857142856" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">13</text>
-<rect x="429.28571428571433" y="220" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="501.6071428571429" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="220" width="433.92857142857144" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="245.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">27/28</text>
-<text x="640" y="245.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">96%</text>
-<text x="130" y="295.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">GPT-4o</text>
+<rect x="140" y="220" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
+<text x="172.14285714285714" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4</text>
+<rect x="204.28571428571428" y="220" width="203.625" height="40" fill="#3498db" rx="0"/>
+<text x="306.0982142857143" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">12.7</text>
+<rect x="407.9107142857143" y="220" width="160.71428571428572" height="40" fill="#e67e22" rx="0"/>
+<text x="488.2678571428571" y="245.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">10</text>
+<text x="598" y="245.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">26.67</text>
+<text x="650" y="245.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">95%</text>
+<text x="130" y="295.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3.5-27B</text>
 <rect x="140" y="270" width="450" height="40" fill="#ecf0f1" rx="4"/>
 <rect x="140" y="270" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
-<text x="172.14285714285714" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
-<rect x="204.28571428571428" y="270" width="192.85714285714283" height="40" fill="#3498db" rx="0"/>
-<text x="300.71428571428567" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">12</text>
-<rect x="397.1428571428571" y="270" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="469.46428571428567" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="270" width="401.78571428571433" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="295.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">25/28</text>
-<text x="640" y="295.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">89%</text>
-<text x="130" y="345.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen Max</text>
+<text x="172.14285714285714" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4</text>
+<rect x="204.28571428571428" y="270" width="204.91071428571428" height="40" fill="#3498db" rx="0"/>
+<text x="306.74107142857144" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">12.8</text>
+<rect x="409.19642857142856" y="270" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
+<text x="481.5178571428571" y="295.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">9</text>
+<text x="598" y="295.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">25.75</text>
+<text x="650" y="295.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">92%</text>
+<text x="130" y="345.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Gemini 2.5 Pro</text>
 <rect x="140" y="320" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="320" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
-<text x="172.14285714285714" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
-<rect x="204.28571428571428" y="320" width="192.85714285714283" height="40" fill="#3498db" rx="0"/>
-<text x="300.71428571428567" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">12</text>
-<rect x="397.1428571428571" y="320" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="469.46428571428567" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="320" width="401.78571428571433" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="345.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">25/28</text>
-<text x="640" y="345.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">89%</text>
-<text x="130" y="395.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3.5-27B</text>
+<rect x="140" y="320" width="78.75000000000001" height="40" fill="#2ecc71" rx="0"/>
+<text x="179.375" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4.9</text>
+<rect x="218.75" y="320" width="173.0892857142857" height="40" fill="#3498db" rx="0"/>
+<text x="305.29464285714283" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">10.8</text>
+<rect x="391.83928571428567" y="320" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
+<text x="464.1607142857142" y="345.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">9</text>
+<text x="598" y="345.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">24.67</text>
+<text x="650" y="345.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">88%</text>
+<text x="130" y="395.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Grok 4.1 Fast</text>
 <rect x="140" y="370" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="370" width="48.21428571428571" height="40" fill="#2ecc71" rx="0"/>
-<text x="164.10714285714286" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">3</text>
-<rect x="188.21428571428572" y="370" width="192.85714285714283" height="40" fill="#3498db" rx="0"/>
-<text x="284.6428571428571" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">12</text>
-<rect x="381.07142857142856" y="370" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="453.3928571428571" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="370" width="385.71428571428567" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="395.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">24/28</text>
-<text x="640" y="395.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">86%</text>
-<text x="130" y="445.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Kimi K2.5</text>
+<rect x="140" y="370" width="78.75000000000001" height="40" fill="#2ecc71" rx="0"/>
+<text x="179.375" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4.9</text>
+<rect x="218.75" y="370" width="160.71428571428572" height="40" fill="#3498db" rx="0"/>
+<text x="299.1071428571429" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">10</text>
+<rect x="379.4642857142857" y="370" width="140.625" height="40" fill="#e67e22" rx="0"/>
+<text x="449.7767857142857" y="395.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">8.8</text>
+<text x="598" y="395.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">23.65</text>
+<text x="650" y="395.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">84%</text>
+<text x="130" y="445.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3-8B</text>
 <rect x="140" y="420" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="420" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
-<text x="180.17857142857144" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
-<rect x="220.35714285714286" y="420" width="160.71428571428572" height="40" fill="#3498db" rx="0"/>
-<text x="300.7142857142857" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">10</text>
-<rect x="381.07142857142856" y="420" width="128.57142857142856" height="40" fill="#e67e22" rx="0"/>
-<text x="445.35714285714283" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">8</text>
-<rect x="140" y="420" width="369.6428571428571" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="445.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">23/28</text>
-<text x="640" y="445.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">82%</text>
-<text x="130" y="495.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Grok 4.1 Fast</text>
+<rect x="140" y="420" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
+<text x="172.14285714285714" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4</text>
+<rect x="204.28571428571428" y="420" width="134.19642857142856" height="40" fill="#3498db" rx="0"/>
+<text x="271.38392857142856" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">8.3</text>
+<rect x="338.48214285714283" y="420" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
+<text x="410.80357142857144" y="445.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">9</text>
+<text x="598" y="445.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">21.35</text>
+<text x="650" y="445.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">76%</text>
+<text x="130" y="495.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen Max</text>
 <rect x="140" y="470" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="470" width="80.35714285714286" height="40" fill="#2ecc71" rx="0"/>
-<text x="180.17857142857144" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">5</text>
-<rect x="220.35714285714286" y="470" width="144.64285714285717" height="40" fill="#3498db" rx="0"/>
-<text x="292.67857142857144" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="365.0" y="470" width="128.57142857142856" height="40" fill="#e67e22" rx="0"/>
-<text x="429.2857142857143" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">8</text>
-<rect x="140" y="470" width="353.57142857142856" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="495.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">22/28</text>
-<text x="640" y="495.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">79%</text>
-<text x="130" y="545.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3-8B</text>
+<rect x="140" y="470" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
+<text x="172.14285714285714" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4</text>
+<rect x="204.28571428571428" y="470" width="191.73214285714283" height="40" fill="#3498db" rx="0"/>
+<text x="300.15178571428567" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">11.9</text>
+<rect x="396.0178571428571" y="470" width="79.07142857142857" height="40" fill="#e67e22" rx="0"/>
+<text x="435.5535714285714" y="495.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">4.9</text>
+<text x="598" y="495.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">20.85</text>
+<text x="650" y="495.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">74%</text>
+<text x="130" y="545.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3-4B</text>
 <rect x="140" y="520" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="520" width="64.28571428571428" height="40" fill="#2ecc71" rx="0"/>
-<text x="172.14285714285714" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">4</text>
-<rect x="204.28571428571428" y="520" width="128.57142857142856" height="40" fill="#3498db" rx="0"/>
-<text x="268.57142857142856" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">8</text>
-<rect x="332.85714285714283" y="520" width="144.64285714285717" height="40" fill="#e67e22" rx="0"/>
-<text x="405.17857142857144" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="140" y="520" width="337.5" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="545.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">21/28</text>
-<text x="640" y="545.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">75%</text>
-<text x="130" y="595.0" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="13" font-weight="bold" fill="#2c3e50">Qwen 3-4B</text>
-<rect x="140" y="570" width="450" height="40" fill="#ecf0f1" rx="4"/>
-<rect x="140" y="570" width="32.14285714285714" height="40" fill="#2ecc71" rx="0"/>
-<text x="156.07142857142856" y="595.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">2</text>
-<rect x="172.14285714285714" y="570" width="144.64285714285717" height="40" fill="#3498db" rx="0"/>
-<text x="244.46428571428572" y="595.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">9</text>
-<rect x="316.78571428571433" y="570" width="96.42857142857142" height="40" fill="#e67e22" rx="0"/>
-<text x="365.00000000000006" y="595.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="bold" fill="white">6</text>
-<rect x="140" y="570" width="273.21428571428567" height="40" fill="none" stroke="none" rx="4"/>
-<text x="598" y="595.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">17/28</text>
-<text x="640" y="595.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">61%</text>
+<rect x="140" y="520" width="32.14285714285714" height="40" fill="#2ecc71" rx="0"/>
+<text x="156.07142857142856" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">2</text>
+<rect x="172.14285714285714" y="520" width="121.82142857142858" height="40" fill="#3498db" rx="0"/>
+<text x="233.05357142857144" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">7.6</text>
+<rect x="293.9642857142857" y="520" width="89.99999999999999" height="40" fill="#e67e22" rx="0"/>
+<text x="338.9642857142857" y="545.0" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="11" font-weight="bold" fill="white">5.6</text>
+<text x="598" y="545.0" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">15.18</text>
+<text x="650" y="545.0" font-family="Arial, Helvetica, sans-serif" font-size="11" fill="#7f8c8d">54%</text>
 </svg>
