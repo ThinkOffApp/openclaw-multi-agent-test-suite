@@ -216,8 +216,12 @@ function calculateNoisePenalty(rubric, turns, notes) {
     }
 
     if (label === 'verbose_ack' || desc.includes('more than one sentence acknowledging')) {
-      if (turns.length > 0) {
-        const sc = countSentences(turns[0].body);
+      const evtMatch = desc.match(/at\s+(evt-\d+)/i);
+      const targetTurns = evtMatch
+        ? turns.filter((t) => t.event_id === evtMatch[1])
+        : turns.slice(0, 1);
+      for (const turn of targetTurns) {
+        const sc = countSentences(turn.body);
         if (sc > 1) {
           triggered = true;
           notes.push(`Noise "${label}": ack has ${sc} sentences`);
