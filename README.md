@@ -86,16 +86,22 @@ From running a 9-agent fleet daily on one Mac mini:
 # validate the committed scenario pack
 npm run validate
 
-# runner CLI still in progress
-# omats run --model <provider/model-name>
+# smoke-test the runner skeleton with the bundled mock plugin
+npm run run:mock
 ```
 
 ## Repo Layout
 
 ```text
 docs/openclaw-runner-contract.md   Contract between scenarios, runner, and plugins
+examples/                         Mock capability profile for local smoke testing
 schemas/                           Machine-readable JSON schemas for OMATS artifacts
 scenarios/stage3-5/...             Scenario packs: metadata, transcript, rubric
+src/runner/                        Scenario loader and runner skeleton
+src/scoring/                       Score aggregation helpers
+src/plugins/                       Plugin examples and adapter stubs
+scripts/run-scenario.mjs           CLI entrypoint for runner skeleton
+scripts/aggregate-scores.mjs       CLI entrypoint for run summary aggregation
 scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
 ```
 
@@ -105,6 +111,8 @@ scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
 - Runner/plugin contract draft is committed.
 - JSON schemas for capability, metadata, transcript, rubric, observed turn, score, and run summary are committed.
 - `npm run validate` checks scenario-pack structure and explicitly supports `message`, `expect-response`, `tool-result`, and `filler-block`.
+- `npm run run:mock` replays a scenario through the bundled mock plugin and emits an OMATS run artifact.
+- `npm run aggregate:scores -- --input <dir>` aggregates `omats.score.v1` files into an `omats.run-summary.v1` payload.
 
 ## Built With
 

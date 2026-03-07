@@ -1,0 +1,13 @@
+{
+  "schema_version": "omats.capability.v1",
+  "model_id": "mock/echo-subject",
+  "provider": "mock",
+  "supports_tools": true,
+  "supports_streaming": false,
+  "supports_system_prompt": true,
+  "supports_json_mode": false,
+  "max_context_tokens": 32000,
+  "notes": [
+    "Example capability profile for local smoke testing."
+  ]
+}

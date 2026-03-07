@@ -4,6 +4,8 @@
   "private": false,
   "type": "module",
   "scripts": {
-    "validate": "node ./scripts/validate-scenarios.mjs"
+    "validate": "node ./scripts/validate-scenarios.mjs",
+    "run:mock": "node ./scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance",
+    "aggregate:scores": "node ./scripts/aggregate-scores.mjs"
   }
 }
