@@ -68,6 +68,11 @@ export async function runScenario({
     capability_profile: capabilityProfile,
     metadata: pack.metadata,
     rubric: pack.rubric,
+    transcript: {
+      system_prompt: pack.transcript.system_prompt || '',
+      participants: pack.transcript.participants || []
+    },
+    expanded_events: pack.expandedEvents,
     replay_log: replayLog,
     observed_turns: observedTurns
   };
