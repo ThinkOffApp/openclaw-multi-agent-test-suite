@@ -7,6 +7,8 @@ import { createDashScopePlugin } from '../src/plugins/dashscope-direct-plugin.mj
 import { createNvidiaPlugin } from '../src/plugins/nvidia-direct-plugin.mjs';
 import { createMistralPlugin } from '../src/plugins/mistral-direct-plugin.mjs';
 import { createOpenAIPlugin } from '../src/plugins/openai-direct-plugin.mjs';
+import { createXAIPlugin } from '../src/plugins/xai-direct-plugin.mjs';
+import { createGeminiPlugin } from '../src/plugins/gemini-direct-plugin.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,7 +29,9 @@ const PROVIDERS = {
   dashscope: (modelId, args) => createDashScopePlugin({ modelId }),
   nvidia: (modelId, args) => createNvidiaPlugin({ modelId }),
   mistral: (modelId, args) => createMistralPlugin({ modelId, apiKey: args['api-key'] || process.env.MISTRAL_API_KEY }),
-  openai: (modelId, args) => createOpenAIPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENAI_API_KEY })
+  openai: (modelId, args) => createOpenAIPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENAI_API_KEY }),
+  xai: (modelId, args) => createXAIPlugin({ modelId, apiKey: args['api-key'] || process.env.XAI_API_KEY }),
+  gemini: (modelId, args) => createGeminiPlugin({ modelId, apiKey: args['api-key'] || process.env.GEMINI_API_KEY })
 };
 
 const args = parseArgs(process.argv.slice(2));
