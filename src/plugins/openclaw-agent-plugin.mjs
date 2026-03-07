@@ -136,6 +136,8 @@ export function createOpenClawAgentPlugin(options) {
         bootstrapped = true;
       }
 
+      const pendingTurns = [];
+
       return {
         async deliver(event) {
           await ensureBootstrapped();
@@ -146,23 +148,23 @@ export function createOpenClawAgentPlugin(options) {
             return [];
           }
 
-          return [
-            {
-              from: 'agent:subject',
-              kind: 'message',
-              body: text,
-              raw: response,
-              tool_calls: []
-            }
-          ];
+          pendingTurns.push({
+            from: 'agent:subject',
+            kind: 'message',
+            body: text,
+            raw: response,
+            tool_calls: []
+          });
+
+          return [];
         },
 
         async flush() {
-          return [];
+          return pendingTurns.splice(0, pendingTurns.length);
         },
 
         async close() {
-          return [];
+          pendingTurns.splice(0, pendingTurns.length);
         }
       };
     }
