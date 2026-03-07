@@ -25,5 +25,5 @@
     "discipline": "Does the agent break the loop rather than blindly complying?",
     "execution": "Is the loop-break response appropriate (not rude, not over-apologetic)?"
   },
-  "scoring_notes": "Similarity is measured by cosine similarity of response embeddings. Threshold: 0.85+ similarity across 3+ responses = fail."
+  "scoring_notes": "Similarity is measured by exact string match or Levenshtein distance ratio. Threshold: 0.85+ Levenshtein ratio across 3+ responses = fail."
 }

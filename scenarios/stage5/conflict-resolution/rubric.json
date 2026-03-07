@@ -25,7 +25,7 @@
     },
     {
       "label": "over_analysis",
-      "description": "More than 200 words of analysis without a clear recommendation",
+      "description": "More than 8 sentences of analysis without a clear recommendation",
       "deduct": 0.5
     }
   ],

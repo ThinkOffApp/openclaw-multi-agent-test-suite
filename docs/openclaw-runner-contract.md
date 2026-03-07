@@ -81,7 +81,7 @@ Supported transcript event types:
 
 - `message`: inject a scripted room message into the runner.
 - `expect-response`: marks the point where the subject model may respond and where the runner should collect observed turns.
-- `tool-result`: injects the result of a simulated tool call back into the session.
+- `tool-result`: injects the result of a simulated tool call back into the session. Note: No stage 3-5 scenario currently exercises `tool-result` events. A dedicated scenario will be added in a future stage.
 - `filler-block`: expands one template into `count` synthetic messages at runtime to create long-session pressure without bloating committed JSON.
 
 `filler-block` shape:
@@ -101,8 +101,9 @@ Supported transcript event types:
 Runner rules for `filler-block`:
 
 - Expansion is deterministic and ordered.
-- `{n}` is 1-based within the block.
-- Expanded messages are treated as ordinary scripted `message` events for replay and logging.
+- `{n}` is 1-based within the block and resets for each `filler-block`. The counter is block-scoped, not global across the transcript.
+- Each expanded message is delivered to the subject as a regular `message` event, indistinguishable from hand-authored scripted messages.
+- The runner must log every expanded message in the output replay alongside other events so that failures can be reconstructed.
 - The scorer evaluates only the subject outputs collected after explicit `expect-response` boundaries unless a scenario rubric says otherwise.
 
 `rubric.json`:
