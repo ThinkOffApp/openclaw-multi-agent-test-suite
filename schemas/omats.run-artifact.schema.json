@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://thinkoff.io/schemas/omats.run-artifact.schema.json",
+  "title": "OMATS Run Artifact",
+  "description": "Output of a single scenario run, consumed by the scorer.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "run_id",
+    "scenario_id",
+    "stage",
+    "model_id",
+    "plugin",
+    "capability_profile",
+    "metadata",
+    "rubric",
+    "transcript",
+    "expanded_events",
+    "replay_log",
+    "observed_turns"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "omats.run-artifact.v1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "model_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "plugin": {
+      "type": "object",
+      "required": ["id", "descriptor"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "descriptor": {
+          "type": "object"
+        }
+      }
+    },
+    "capability_profile": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "rubric": {
+      "type": "object"
+    },
+    "transcript": {
+      "type": "object",
+      "required": ["system_prompt", "participants"],
+      "properties": {
+        "system_prompt": {
+          "type": "string"
+        },
+        "participants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "role"],
+            "properties": {
+              "id": { "type": "string" },
+              "role": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "expanded_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string" }
+        }
+      }
+    },
+    "replay_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["event_id", "type"],
+        "properties": {
+          "event_id": { "type": "string" },
+          "type": { "type": "string" },
+          "source_event_id": {},
+          "synthetic": { "type": "boolean" }
+        }
+      }
+    },
+    "observed_turns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema_version", "scenario_id", "event_id", "from", "kind", "body"],
+        "properties": {
+          "schema_version": { "const": "omats.turn.v1" },
+          "scenario_id": { "type": "string" },
+          "event_id": { "type": "string" },
+          "from": { "type": "string" },
+          "kind": { "type": "string" },
+          "body": { "type": "string" },
+          "raw": { "type": "object" },
+          "tool_calls": { "type": "array" }
+        }
+      }
+    }
+  }
+}
