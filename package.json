@@ -6,6 +6,7 @@
   "scripts": {
     "validate": "node ./scripts/validate-scenarios.mjs",
     "run:mock": "node ./scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance",
+    "run:openclaw": "node ./scripts/run-openclaw-scenario.mjs",
     "aggregate:scores": "node ./scripts/aggregate-scores.mjs"
   }
 }

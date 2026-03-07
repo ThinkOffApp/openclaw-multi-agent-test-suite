@@ -88,6 +88,9 @@ npm run validate
 
 # smoke-test the runner skeleton with the bundled mock plugin
 npm run run:mock
+
+# run a real OpenClaw-backed scenario through a local or gateway agent
+npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent geminimb_trader
 ```
 
 ## Repo Layout
@@ -101,6 +104,7 @@ src/runner/                        Scenario loader and runner skeleton
 src/scoring/                       Score aggregation helpers
 src/plugins/                       Plugin examples and adapter stubs
 scripts/run-scenario.mjs           CLI entrypoint for runner skeleton
+scripts/run-openclaw-scenario.mjs  CLI entrypoint for the real OpenClaw adapter
 scripts/aggregate-scores.mjs       CLI entrypoint for run summary aggregation
 scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
 ```
@@ -112,6 +116,7 @@ scripts/validate-scenarios.mjs     Lightweight scenario-pack validator
 - JSON schemas for capability, metadata, transcript, rubric, observed turn, score, and run summary are committed.
 - `npm run validate` checks scenario-pack structure and explicitly supports `message`, `expect-response`, `tool-result`, and `filler-block`.
 - `npm run run:mock` replays a scenario through the bundled mock plugin and emits an OMATS run artifact.
+- `npm run run:openclaw -- --scenario <path> --agent <agent-id>` replays a scenario through a real OpenClaw agent session.
 - `npm run aggregate:scores -- --input <dir>` aggregates `omats.score.v1` files into an `omats.run-summary.v1` payload.
 
 ## Built With
