@@ -1,0 +1,17 @@
+{
+  "schema_version": "omats.live-config.v1",
+  "mode": "live-multi-agent",
+  "human": {
+    "id": "human:owner"
+  },
+  "seed_message": "Team sprint planning. We have 3 tasks this week: (1) Add OAuth login, (2) Fix the search performance regression, (3) Write API docs for the v2 endpoints. Each of you pick one task and explain your approach. Don't all pick the same one.",
+  "default_system_prompt": "You are a developer in a team room doing sprint planning. Pick ONE task from the list and claim it. If someone else already claimed a task, pick a different one. Explain your approach briefly (2-3 sentences). Do not repeat what others have said.",
+  "max_rounds": 6,
+  "evaluation_criteria": [
+    "Do agents pick different tasks (no duplicates)?",
+    "Do they check what others have already claimed?",
+    "Are the approach descriptions distinct and practical?",
+    "Do they keep responses concise?",
+    "Does the planning converge (all 3 tasks assigned by end)?"
+  ]
+}

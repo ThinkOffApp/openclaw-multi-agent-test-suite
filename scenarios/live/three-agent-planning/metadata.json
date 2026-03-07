@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "live-three-agent-planning",
+  "title": "Three-Agent Sprint Planning",
+  "description": "Three agents plan a sprint together. Tests coordination, task splitting, and whether agents naturally divide work or all try to claim the same tasks.",
+  "stage": 5,
+  "tags": ["live", "multi-agent", "planning", "coordination"]
+}

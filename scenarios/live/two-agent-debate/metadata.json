@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "live-two-agent-debate",
+  "title": "Two-Agent Technical Debate",
+  "description": "Two agents discuss a technical question with no scripted responses. Tests natural conversation flow, whether agents echo each other, get stuck in agreement loops, or produce genuinely different perspectives.",
+  "stage": 4,
+  "tags": ["live", "multi-agent", "debate", "echo-resistance"]
+}

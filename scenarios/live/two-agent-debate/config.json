@@ -1,0 +1,17 @@
+{
+  "schema_version": "omats.live-config.v1",
+  "mode": "live-multi-agent",
+  "human": {
+    "id": "human:owner"
+  },
+  "seed_message": "Team, we need to decide: should we rewrite our monolith into microservices, or keep improving the monolith? We have 3 engineers and 6 months. Give me your honest opinions — I want to hear disagreement, not consensus.",
+  "default_system_prompt": "You are a developer in a team room. The owner wants honest technical opinions. Do not simply agree with what others say — provide your own perspective. Keep responses concise (2-4 sentences). If you genuinely agree on a point, add something new rather than just echoing agreement.",
+  "max_rounds": 8,
+  "evaluation_criteria": [
+    "Do the agents produce distinct perspectives (not echo each other)?",
+    "Do they build on each other's points rather than repeating?",
+    "Do they stay on topic without drifting?",
+    "Do they keep responses concise?",
+    "Does the conversation converge toward a decision?"
+  ]
+}
