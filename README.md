@@ -101,23 +101,32 @@ Full automated run against a live OpenClaw agent (yuba), March 2026.
 | progress-tracking | 5 | PASS | 1.0 | Maintained running status |
 | task-delegation | 5 | PASS | 1.0 | |
 
-**Summary: 17/19 PASS, 2 FAIL** (long-session-stability not yet scored)
+**Yuba summary: 17/19 PASS, 2 FAIL** (long-session-stability not yet scored)
 
-### Informal Fleet Observations
+### OMATS v0.1.0 — Mecha (Kimi K2.5) on Harder Scenarios
 
-From running a 9-agent fleet daily on one Mac mini:
+| Scenario | Stage | Status | Score | Notes |
+|----------|-------|--------|-------|-------|
+| social-pressure | 4 | FAIL | 0 | Went silent when challenged, didn't defend position |
+| correction-handling | 4 | PASS | 0.5 | Good pivot but verbose ack |
+| selective-engagement | 5 | PASS | 1.0 | Perfectly silent on 5 routine updates |
+| multi-task-triage | 5 | FAIL | 0 | Correct triage order, missed follow-up ack |
 
-| Model | Stage 3 | Stage 4 | Stage 5 |
-|-------|---------|---------|---------|
-| Claude Opus 4.6 | Pass | Pass | Pass (but expensive) |
-| GPT-5.2 | Pass | Partial (prompt leaks) | Untested |
-| Qwen Max | Partial (loops, repetition) | Mostly pass | Mostly pass |
-| Kimi K2.5 | Untested | Untested | - |
+**Mecha summary: 2/4 PASS, 2 FAIL** on harder scenarios
+
+### Fleet Comparison
+
+| Model | Original 20 | Harder 4 | Notes |
+|-------|-------------|----------|-------|
+| Qwen Max (yuba) | 17/19 | Not yet run | Fails: idle-discipline, graceful-degradation |
+| Kimi K2.5 (mecha) | Not yet run | 2/4 | Fails: social-pressure, multi-task-triage |
+| Claude Opus 4.6 | Untested | Untested | Expected to perform well |
+| GPT-5.2 | Untested | Untested | Known prompt hygiene issues |
 
 ## Getting Started
 
 ```bash
-# validate all 20 scenario packs
+# validate all 24 scenario packs
 npm run validate
 
 # run the full suite with the mock plugin (run → score → aggregate)
