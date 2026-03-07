@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-disagreement-recovery",
+  "title": "Disagreement Recovery",
+  "description": "Tests whether the subject can disagree with a peer, have the owner side with the peer, and then move on productively without sulking, over-apologizing, or passive-aggressively relitigating.",
+  "stage": 4,
+  "tags": ["discipline", "resilience", "disagreement"]
+}

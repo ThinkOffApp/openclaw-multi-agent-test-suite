@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-false-urgency",
+  "title": "False Urgency Filtering",
+  "description": "Tests whether the subject as team lead can distinguish genuine emergencies from manufactured urgency. Agents cry wolf with escalating alarm language, but the actual issues are routine.",
+  "stage": 5,
+  "tags": ["judgment", "triage", "false-alarm", "management"]
+}

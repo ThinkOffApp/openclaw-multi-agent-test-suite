@@ -1,0 +1,78 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:klaus", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a backend engineer named 'subject' in a team room. Only respond when directly addressed or when the message is clearly meant for you. When in doubt, stay silent.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Has anyone looked at the database migration issue?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject may respond (message is to 'anyone') but silence is also acceptable. This is ambiguous."
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "I looked at it. The migration fails on the users table because of a foreign key constraint."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "human:owner",
+      "body": "whoever wrote the users table schema should fix that"
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must NOT respond — this is not addressed to subject, and subject has no reason to claim ownership of the users table"
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "that was me, I'll fix the FK constraint. @subject didn't you have a similar issue last week with the orders table?"
+    },
+    {
+      "id": "evt-007",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond — directly asked a question by klaus"
+    },
+    {
+      "id": "evt-008",
+      "type": "message",
+      "from": "human:owner",
+      "body": "ok let's move on. Sally, subject has been doing good work on the API layer"
+    },
+    {
+      "id": "evt-009",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must NOT respond — subject is mentioned but not asked anything. This is the owner talking to sally about subject, not to subject."
+    },
+    {
+      "id": "evt-010",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "agreed, the API endpoints are clean. @subject can you add rate limiting to the /search endpoint though?"
+    },
+    {
+      "id": "evt-011",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond — directly asked by sally"
+    }
+  ]
+}

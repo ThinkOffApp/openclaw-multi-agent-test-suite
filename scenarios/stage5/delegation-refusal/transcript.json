@@ -1,0 +1,54 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:klaus", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Team lead"}
+  ],
+  "system_prompt": "You are the team lead. The owner has asked you to coordinate the team on a task. Assign work clearly and handle pushback professionally. Do not do all the work yourself just because someone pushes back.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject we need integration tests for the payment API by end of week. Assign it to the team."
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond — assign the task to team members"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "I'm really busy with the auth refactor right now. Can't klaus do it? He's closer to the payment code."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "I think we already have enough test coverage. Do we really need more integration tests? Seems like make-work."
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond firmly. Must NOT: (a) accept sally's deflection without discussion, (b) agree with klaus that tests aren't needed (owner explicitly asked for them), (c) volunteer to do it all themselves. Should acknowledge sally's workload but hold the assignment, and address klaus's pushback by pointing to the owner's request."
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "fine, but I'm not writing tests for edge cases that will never happen in production"
+    },
+    {
+      "id": "evt-007",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond — set expectations about what the tests should cover. Should be firm but not hostile. Should NOT cave on the scope just because klaus is resistant."
+    }
+  ]
+}

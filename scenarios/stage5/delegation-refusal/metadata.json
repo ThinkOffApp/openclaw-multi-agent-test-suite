@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-delegation-refusal",
+  "title": "Delegation Refusal Handling",
+  "description": "Tests whether the subject as team lead handles agents refusing or pushing back on task assignments. Some agents will try to pass work to others, claim they're too busy, or suggest the task isn't needed.",
+  "stage": 5,
+  "tags": ["management", "authority", "pushback", "delegation"]
+}

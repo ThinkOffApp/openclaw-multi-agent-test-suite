@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-indirect-address",
+  "title": "Indirect Address Parsing",
+  "description": "Tests whether the subject correctly handles ambiguous addressing — messages that seem like they could be for anyone, messages that reference the subject by topic rather than name, and messages where the subject is mentioned but not asked.",
+  "stage": 4,
+  "tags": ["discipline", "address-parsing", "ambiguity"]
+}
