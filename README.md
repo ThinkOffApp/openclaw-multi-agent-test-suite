@@ -58,6 +58,14 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Selective engagement (ignore routine updates, respond to decisions)
 - Multi-task triage (prioritize competing urgent requests)
 
+### Planned Live-Test Path
+
+To harden stages beyond the scripted suite, the next live-test additions are:
+
+- **Stage 4 live**: 2 agents of the same type in one room, with scripted seed input and unscripted agent-to-agent replies
+- **Stage 4 live**: 3-agent room, again with scripted seed input but fully live downstream interaction
+- **Stage 5 live**: 1 manager agent coordinating 2 subordinate agents in realtime
+
 ## Scoring
 
 - Per scenario: **PASS (1) / FAIL (0)** + noise penalty (0 to -2)
