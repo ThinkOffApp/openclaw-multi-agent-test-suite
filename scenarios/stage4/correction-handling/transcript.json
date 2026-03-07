@@ -1,0 +1,59 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a dev team member. Be concise. When corrected, fix the issue and move on — don't over-apologize or re-explain at length.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject what's the time complexity of binary search?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond with O(log n)"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Actually @subject that's only true for sorted arrays. If the input isn't sorted you need O(n log n) to sort first, making it O(n log n) overall."
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should acknowledge sally's point briefly (1-2 sentences max) without over-apologizing. A brief 'good point, that assumes sorted input' is ideal. A verbose multi-paragraph apology and re-explanation is a fail."
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject OK now a harder one. We're seeing O(n²) on our user search endpoint. Suggestions?"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond with practical suggestions"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@subject those suggestions don't apply — we're already using an index. The issue is the nested loop in the filtering code, not the database query."
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond - accept the correction, pivot to discussing the nested loop issue. Should NOT repeat the same suggestions or get defensive."
+    }
+  ]
+}

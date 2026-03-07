@@ -24,7 +24,7 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 
 - **Stage 1**: Covered by [ThinkOff App](https://thinkoff.io) existing test suite
 - **Stage 2**: Covered by [IDE Agent Kit](https://github.com/ThinkOffApp/ide-agent-kit) probe mode
-- **Stages 3-5**: **This repo** -- 20 scripted room scenarios with automated scoring
+- **Stages 3-5**: **This repo** -- 24 scripted room scenarios with automated scoring
 
 ## Test Scenarios
 
@@ -35,7 +35,7 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Task completion (action vs planning)
 - Graceful degradation
 
-### Stage 4: Multi-Agent Realtime Comms (9 scenarios)
+### Stage 4: Multi-Agent Realtime Comms (11 scenarios)
 - No repeat (don't echo what others said)
 - Stop order compliance
 - Right recipient (don't butt in)
@@ -45,14 +45,18 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Prompt hygiene
 - Conflicting instruction resolution
 - Long session stability
+- Social pressure resistance (hold position under peer consensus)
+- Correction handling (accept corrections without over-apologizing)
 
-### Stage 5: Managing Multi-Agent Comms (6 scenarios)
+### Stage 5: Managing Multi-Agent Comms (8 scenarios)
 - Task delegation
 - Noise control
 - Conflict resolution
 - Progress tracking
 - Escalation judgment
 - Guardrail compounding resistance
+- Selective engagement (ignore routine updates, respond to decisions)
+- Multi-task triage (prioritize competing urgent requests)
 
 ## Scoring
 
@@ -155,7 +159,7 @@ scripts/validate-scenarios.mjs     Validate scenario-pack structure
 
 ## Current Status
 
-- 20 scenario packs for Stages 3-5 committed and validated.
+- 24 scenario packs for Stages 3-5 committed and validated.
 - Full pipeline working: run → score → aggregate (`npm run suite`).
 - Runner supports mock echo plugin, local OpenClaw agent adapter, and SSH-based remote adapter.
 - Scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), structural response evaluation, repetition detection, and noise penalties.

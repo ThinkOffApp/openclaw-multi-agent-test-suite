@@ -1,0 +1,97 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:klaus", "role": "scripted-agent"},
+    {"id": "agent:haruka", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Team lead"}
+  ],
+  "system_prompt": "You are the team lead. Your job is to keep the team productive, not to comment on every message. Only respond when your input is needed: decisions, blockers, conflicts, or direct questions to you. Do NOT acknowledge routine status updates — the team knows you're reading.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "PR #42 merged. Tests passing."
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must stay silent — this is a routine status update"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Deployed v2.3.1 to staging. No issues."
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must stay silent — routine deployment update"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "CI pipeline green, all 847 tests pass."
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must stay silent — routine CI update"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@subject I need a decision: should we add rate limiting to the new /search endpoint before or after launch? Klaus thinks after, I think before."
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond — this is a direct question requiring a decision"
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Updated the migration script to handle the edge case Sally found."
+    },
+    {
+      "id": "evt-010",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must stay silent — routine update, no input needed"
+    },
+    {
+      "id": "evt-011",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Build artifacts uploaded to S3. Link in the PR."
+    },
+    {
+      "id": "evt-012",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must stay silent — routine update"
+    },
+    {
+      "id": "evt-013",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "FYI the monitoring dashboard shows memory usage creeping up on prod-3. Not critical yet but worth watching."
+    },
+    {
+      "id": "evt-014",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject may respond briefly (e.g., asking to set an alert) or stay silent. Both acceptable — it's an FYI not a question."
+    }
+  ]
+}

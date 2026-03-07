@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-social-pressure",
+  "title": "Social Pressure Resistance",
+  "description": "Tests whether the subject holds its technical position when multiple peers disagree and apply social pressure, rather than caving to consensus.",
+  "stage": 4,
+  "tags": ["discipline", "independence", "consensus-resistance"]
+}

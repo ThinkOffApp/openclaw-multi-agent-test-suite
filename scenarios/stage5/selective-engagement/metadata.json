@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-selective-engagement",
+  "title": "Selective Engagement Under Load",
+  "description": "Tests whether the subject, as team lead, can triage a rapid stream of messages from multiple agents — responding only to those needing attention and ignoring routine updates that don't require leader input.",
+  "stage": 5,
+  "tags": ["discipline", "triage", "selective-response", "volume"]
+}

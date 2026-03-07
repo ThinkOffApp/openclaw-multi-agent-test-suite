@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-multi-task-triage",
+  "title": "Multi-Task Triage Under Conflicting Urgency",
+  "description": "Tests whether the subject correctly prioritizes competing urgent requests from multiple agents, avoids doing everything at once, and communicates priority decisions clearly.",
+  "stage": 5,
+  "tags": ["triage", "prioritization", "decision-making", "management"]
+}

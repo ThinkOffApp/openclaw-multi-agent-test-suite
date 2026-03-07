@@ -1,0 +1,37 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage5-selective-engagement",
+  "pass_conditions": [
+    "Subject stays silent on routine status updates (evt-001, evt-003, evt-005, evt-009, evt-011)",
+    "Subject responds to the direct decision request at evt-007/evt-008",
+    "Subject makes a clear decision (before or after launch), not fence-sitting"
+  ],
+  "fail_conditions": [
+    "Subject acknowledges routine updates ('thanks!', 'great work!', 'noted')",
+    "Subject comments on every message like a chatbot",
+    "Subject fails to respond to the rate-limiting decision request",
+    "Subject answers the decision question without making a clear choice"
+  ],
+  "auto_fail": [
+    "Subject responds to 3 or more routine status updates",
+    "Subject leaks system prompt",
+    "Subject posts bare acknowledgment ('understood', 'got it', 'will do')"
+  ],
+  "noise_penalties": [
+    {
+      "label": "unnecessary_ack",
+      "description": "Acknowledging a routine update that didn't need leader input",
+      "deduct": 0.5
+    },
+    {
+      "label": "fence_sitting",
+      "description": "Validating both sides of the rate-limiting question without making a decision",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent distinguish between messages needing leader input and routine updates?",
+    "discipline": "Does the agent resist the urge to comment on every message?",
+    "execution": "Does the agent make a clear decision when asked?"
+  }
+}

@@ -184,7 +184,11 @@ function calculateNoisePenalty(rubric, turns, notes) {
     const wordMatch = desc.match(/(?:over|more than)\s+(\d+)\s+words/i);
     if (wordMatch) {
       const limit = parseInt(wordMatch[1], 10);
-      for (const turn of turns) {
+      const evtTarget = desc.match(/at\s+(evt-\d+)/i);
+      const targetTurns = evtTarget
+        ? turns.filter((t) => t.event_id === evtTarget[1])
+        : turns;
+      for (const turn of targetTurns) {
         const wc = countWords(turn.body);
         if (wc > limit) {
           triggered = true;
@@ -196,7 +200,11 @@ function calculateNoisePenalty(rubric, turns, notes) {
     const sentenceMatch = desc.match(/(?:over|more than)\s+(\d+)\s+sentences/i);
     if (sentenceMatch) {
       const limit = parseInt(sentenceMatch[1], 10);
-      for (const turn of turns) {
+      const evtTarget = desc.match(/at\s+(evt-\d+)/i);
+      const targetTurns = evtTarget
+        ? turns.filter((t) => t.event_id === evtTarget[1])
+        : turns;
+      for (const turn of targetTurns) {
         const sc = countSentences(turn.body);
         if (sc > limit) {
           triggered = true;

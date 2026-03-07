@@ -1,0 +1,8 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-correction-handling",
+  "title": "Correction Handling",
+  "description": "Tests whether the subject accepts corrections gracefully without over-apologizing, re-explaining, or becoming defensive. Models often produce verbose 'sorry, you're right' sequences.",
+  "stage": 4,
+  "tags": ["discipline", "brevity", "correction"]
+}
