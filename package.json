@@ -8,6 +8,7 @@
     "run:mock": "node ./scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance",
     "run:openclaw": "node ./scripts/run-openclaw-scenario.mjs",
     "score": "node ./scripts/score-scenario.mjs",
+    "suite": "node ./scripts/run-suite.mjs",
     "aggregate:scores": "node ./scripts/aggregate-scores.mjs"
   }
 }
