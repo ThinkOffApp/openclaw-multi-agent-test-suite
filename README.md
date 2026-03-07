@@ -104,11 +104,17 @@ The test runner creates simulated OpenClaw rooms, plays the scripted messages, c
 
 ## Results (March 2026)
 
-Automated runs via direct API calls (OpenAI, DashScope, Mistral, xAI, Google) and OpenClaw agents (Kimi K2.5). All 28 scenarios, all stages.
+### Model Comprehension Scores
+
+These results test **model comprehension of multi-agent patterns** via direct API calls. The test scenarios simulate OpenClaw room dynamics (turn-taking, system prompts, event replay) but the models are called directly — they don't run through OpenClaw's agent personality, memory persistence, gateway routing, or idle loop.
+
+This means these scores measure: "given a multi-agent transcript, can the model respond correctly?" They are harder than Stage 1 (single-turn) but do not test real agent behavior. Think of them as a prerequisite filter — models that fail here definitely won't work as OpenClaw bots, but passing doesn't guarantee good live performance.
+
+**For real OMATS scores, see [Live OpenClaw Tests](#planned-live-test-path) (coming soon).**
 
 ![OMATS Benchmark Chart](docs/omats-chart.svg)
 
-🟢 P = pass, 🔴 F = fail, 🟡 ~ = pass with noise penalty, — = not yet tested.
+🟢 P = pass, 🔴 F = fail, 🟡 ~ = pass with noise penalty, ⚠️ E = API error, — = not yet tested.
 
 ### Score Summary
 
