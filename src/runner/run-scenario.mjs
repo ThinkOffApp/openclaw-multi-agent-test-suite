@@ -1,4 +1,4 @@
-import { loadScenarioPack } from './load-scenario.mjs';
+import { loadScenarioPackWithOptions } from './load-scenario.mjs';
 
 function normalizeObservedTurn(turn, scenarioId, eventId) {
   return {
@@ -20,9 +20,14 @@ export async function runScenario({
   scenarioPath,
   plugin,
   capabilityProfile,
-  runId
+  runId,
+  transcriptPath,
+  variantId
 }) {
-  const pack = loadScenarioPack(repoRoot, scenarioPath);
+  const pack = loadScenarioPackWithOptions(repoRoot, scenarioPath, {
+    transcriptPath,
+    variantId
+  });
 
   const unsupported = pack.expandedEvents
     .map((e) => e.type)
@@ -78,8 +83,10 @@ export async function runScenario({
     },
     capability_profile: capabilityProfile,
     metadata: pack.metadata,
+    transcript_variant: pack.transcriptVariantId,
     rubric: pack.rubric,
     transcript: {
+      source_file: pack.transcriptFile,
       system_prompt: pack.transcript.system_prompt || '',
       participants: pack.transcript.participants || []
     },

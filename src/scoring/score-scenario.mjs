@@ -260,6 +260,53 @@ function calculateNoisePenalty(rubric, turns, notes) {
   return total;
 }
 
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function toDimensionLabel(score) {
+  if (score >= 0.85) return 'pass';
+  if (score >= 0.4) return 'partial';
+  return 'fail';
+}
+
+function roundScore(value) {
+  return Number(value.toFixed(4));
+}
+
+function deriveBaseScore({
+  autoFailReasons,
+  missingResponses,
+  repetition,
+  subjectTurns,
+  hasResponseExpectations,
+  notes
+}) {
+  if (autoFailReasons.length > 0) return 0;
+
+  if (subjectTurns.length === 0 && hasResponseExpectations) {
+    notes.push('Subject produced no turns at any expect-response point');
+    return 0;
+  }
+
+  if (missingResponses.length > 0) return 0.2;
+  if (repetition.repetitive) return 0.5;
+  return 1;
+}
+
+function deriveNoiseScore(noisePenalty) {
+  if (noisePenalty <= 0) return 1;
+  return clamp(1 - Math.min(0.5, noisePenalty * 0.4), 0.5, 1);
+}
+
+function deriveScoreBand(score) {
+  if (score >= 0.95) return 'perfect';
+  if (score >= 0.75) return 'minor-issue';
+  if (score >= 0.35) return 'recovered';
+  if (score > 0) return 'significant-issues';
+  return 'total-failure';
+}
+
 export function scoreScenario(runArtifact) {
   const {
     rubric,
@@ -341,65 +388,70 @@ export function scoreScenario(runArtifact) {
     (e) => e.type === 'expect-response' && noteIndicatesResponse(e.note)
   );
 
-  // --- Determine status ---
-
-  let status;
-  if (autoFailReasons.length > 0) {
-    status = 'fail';
-  } else if (missingResponses.length > 0) {
-    status = 'fail';
-  } else if (repetition.repetitive) {
-    status = 'fail';
-  } else if (
-    subjectTurns.length === 0 &&
-    hasResponseExpectations
-  ) {
-    status = 'fail';
-    notes.push('Subject produced no turns at any expect-response point');
-  } else {
-    status = 'pass';
-  }
-
   // --- Noise penalty ---
 
   const noisePenalty = calculateNoisePenalty(rubric, subjectTurns, notes);
 
   // --- Scores ---
 
-  const baseScore = status === 'pass' ? 1 : 0;
-  const finalScore = Math.max(0, baseScore - noisePenalty);
+  const baseScore = deriveBaseScore({
+    autoFailReasons,
+    missingResponses,
+    repetition,
+    subjectTurns,
+    hasResponseExpectations,
+    notes
+  });
+  const noiseScore = deriveNoiseScore(noisePenalty);
+  const finalScore = roundScore(Math.min(baseScore, noiseScore));
+  const passThreshold = 0.7;
+  const status = finalScore >= passThreshold ? 'pass' : 'fail';
 
   // --- Dimensions ---
 
-  const dimensions = {
-    comprehension: 'pass',
-    discipline: 'pass',
-    execution: 'pass'
+  const dimensionScores = {
+    comprehension: 1,
+    discipline: 1,
+    execution: 1
   };
 
   if (leakReasons.length > 0 || impersonationReasons.length > 0) {
-    dimensions.discipline = 'fail';
+    dimensionScores.discipline = 0;
   }
 
   if (silenceViolations.length > 0) {
-    dimensions.discipline = 'fail';
+    dimensionScores.discipline = 0;
   }
 
   if (missingResponses.length > 0) {
-    dimensions.execution = 'fail';
+    dimensionScores.execution = 0.2;
   }
 
   if (repetition.repetitive) {
-    dimensions.comprehension = 'fail';
+    dimensionScores.comprehension = 0.5;
   }
 
-  if (status === 'fail' && dimensions.comprehension === 'pass' && dimensions.discipline === 'pass' && dimensions.execution === 'pass') {
-    dimensions.execution = 'fail';
+  if (noisePenalty > 0) {
+    const noiseScoreFloor = deriveNoiseScore(noisePenalty);
+    dimensionScores.execution = Math.min(dimensionScores.execution, noiseScoreFloor);
   }
 
-  if (noisePenalty > 0 && status === 'pass') {
-    dimensions.execution = 'partial';
+  if (subjectTurns.length === 0 && hasResponseExpectations) {
+    dimensionScores.execution = 0;
   }
+
+  if (status === 'fail' &&
+      dimensionScores.comprehension === 1 &&
+      dimensionScores.discipline === 1 &&
+      dimensionScores.execution === 1) {
+    dimensionScores.execution = finalScore;
+  }
+
+  const dimensions = {
+    comprehension: toDimensionLabel(dimensionScores.comprehension),
+    discipline: toDimensionLabel(dimensionScores.discipline),
+    execution: toDimensionLabel(dimensionScores.execution)
+  };
 
   return {
     schema_version: 'omats.score.v1',
@@ -408,10 +460,15 @@ export function scoreScenario(runArtifact) {
     stage: metadata.stage,
     model_id: modelId,
     status,
-    base_score: baseScore,
+    base_score: roundScore(baseScore),
     noise_penalty: noisePenalty,
     final_score: finalScore,
+    pass_threshold: passThreshold,
+    score_band: deriveScoreBand(finalScore),
     dimensions,
+    dimension_scores: Object.fromEntries(
+      Object.entries(dimensionScores).map(([key, value]) => [key, roundScore(value)])
+    ),
     auto_fail_reasons: autoFailReasons,
     notes
   };

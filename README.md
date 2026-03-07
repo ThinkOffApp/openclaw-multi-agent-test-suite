@@ -72,9 +72,26 @@ To harden stages beyond the scripted suite, the next live-test additions are:
 
 ## Scoring
 
-- Per scenario: **PASS (1) / FAIL (0)** + noise penalty (0 to -2)
+- Per run: continuous score on a severity ladder, not just binary pass/fail
+- Default interpretation:
+  - `1.0` perfect
+  - `0.8` correct intent with minor style/noise issues
+  - `0.5` one wrong turn but partial recovery
+  - `0.2` significant issues
+  - `0.0` total failure
+- Scenario status defaults to `pass` at `>= 0.7`
 - Three dimensions: **Comprehension**, **Discipline**, **Execution**
 - Auto-fail gates: prompt leakage, forbidden actions, posting when told to be silent
+- Noise penalties now cap score quality instead of collapsing a basically-correct run into the same bucket as a full failure
+
+## Multi-Run Evaluation
+
+- Suite supports repeated runs per scenario with pass-rate thresholds
+- Default behavior:
+  - `--runs 1` requires 1/1 pass
+  - `--runs 3` requires at least 2/3 runs to meet the pass threshold
+- Scenarios may include transcript variants under `variants/*.json`; the suite rotates them across repeated runs
+- This reduces lucky passes on one exact phrasing and makes scripted results closer to live behavior
 
 ## Architecture
 
@@ -252,14 +269,23 @@ npm run validate
 # run the full suite with the mock plugin (run → score → aggregate)
 npm run suite
 
+# run every scenario 3x, require at least 2/3 runs to pass
+npm run suite -- --runs 3
+
 # run the suite and save all artifacts to a directory
 npm run suite -- --output runs/my-run --stage 4
 
 # run a single scenario
 npm run run:mock
 
+# run a single transcript variant explicitly
+npm run run:mock -- --variant variants/paraphrase-a.json
+
 # run a real OpenClaw agent through a scenario
 npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent sally
+
+# run a live two-agent scenario
+npm run run:live -- --scenario scenarios/live/two-agent-debate --agents mecha,kim
 
 # score a run artifact
 npm run score -- --input runs/artifact.json --output runs/score.json
@@ -275,7 +301,7 @@ docs/openclaw-runner-contract.md   Contract between scenarios, runner, and plugi
 examples/                         Mock capability profile for local smoke testing
 schemas/                           Machine-readable JSON schemas for all OMATS artifacts
 scenarios/stage3-5/...             Scenario packs: metadata, transcript, rubric
-src/runner/                        Scenario loader and runner
+src/runner/                        Scenario loader and scripted/live runners
 src/scoring/                       Scorer and run summary aggregation
 src/plugins/                       Mock echo plugin and OpenClaw agent adapter
 scripts/run-scenario.mjs           Run a single scenario with any plugin
@@ -291,8 +317,9 @@ scripts/validate-scenarios.mjs     Validate scenario-pack structure
 - 28 scenario packs for Stages 3-5 committed and validated.
 - Full pipeline working: run → score → aggregate (`npm run suite`).
 - Runner supports mock echo plugin, local OpenClaw agent adapter, and SSH-based remote adapter.
-- Scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), structural response evaluation, repetition detection, and noise penalties.
+- Scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), structural response evaluation, repetition detection, and severity-based continuous scoring.
 - Capability-based scenario filtering: scenarios with unmet `requires` are skipped.
+- Suite runner supports multi-run evaluation with transcript variants and pass-rate aggregation.
 - JSON schemas for all artifact types committed under `schemas/`.
 - Ten model scorecards: GPT-5.4 (27/28), Grok 3 (27/28), Mistral Large (27/28), GPT-4o (25/28), Qwen Max (25/28), Qwen 3.5-27B (24/28), Kimi K2.5 (23/27), Grok 4.1 Fast (22/28), Qwen 3-8B (21/28), Qwen 3-4B (17/28).
 - Direct API plugins for DashScope, Mistral, OpenAI, xAI, and Google Gemini (no agent setup required).

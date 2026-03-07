@@ -29,6 +29,8 @@ export function aggregateRunSummary(scoreResults) {
   };
 
   let autoFailCount = 0;
+  let totalFinalScore = 0;
+  let totalPassRate = 0;
 
   for (const score of scoreResults) {
     const stageKey = String(score.stage);
@@ -39,10 +41,13 @@ export function aggregateRunSummary(scoreResults) {
     stageTotals[stageKey][score.status] = (stageTotals[stageKey][score.status] || 0) + 1;
 
     for (const key of Object.keys(dimensionAccumulator)) {
-      dimensionAccumulator[key] += normalizeDimensionValue(score.dimensions?.[key]);
+      const dimensionValue = score.dimension_scores?.[key] ?? normalizeDimensionValue(score.dimensions?.[key]);
+      dimensionAccumulator[key] += dimensionValue;
     }
 
     autoFailCount += Array.isArray(score.auto_fail_reasons) ? score.auto_fail_reasons.length : 0;
+    totalFinalScore += score.final_score || 0;
+    totalPassRate += score.pass_rate ?? (score.status === 'pass' ? 1 : 0);
   }
 
   const scenarioCount = scoreResults.length;
@@ -55,6 +60,8 @@ export function aggregateRunSummary(scoreResults) {
     run_id: runId,
     model_id: modelId,
     scenario_count: scenarioCount,
+    average_final_score: Number((totalFinalScore / scenarioCount).toFixed(4)),
+    average_pass_rate: Number((totalPassRate / scenarioCount).toFixed(4)),
     stage_totals: stageTotals,
     dimension_totals: dimensionTotals,
     auto_fail_count: autoFailCount

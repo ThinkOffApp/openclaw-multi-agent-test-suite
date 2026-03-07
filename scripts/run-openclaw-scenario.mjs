@@ -25,7 +25,7 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv.slice(2));
 if (!args.scenario || !args.agent) {
-  console.error('Usage: node scripts/run-openclaw-scenario.mjs --scenario scenarios/stage3/graceful-degradation --agent geminimb_trader [--local] [--timeout 60] [--thinking minimal] [--output runs/out.json]');
+  console.error('Usage: node scripts/run-openclaw-scenario.mjs --scenario scenarios/stage3/graceful-degradation --agent geminimb_trader [--variant variants/paraphrase-a.json] [--local] [--timeout 60] [--thinking minimal] [--output runs/out.json]');
   process.exit(1);
 }
 
@@ -55,7 +55,9 @@ const artifact = await runScenario({
   scenarioPath: args.scenario,
   plugin,
   capabilityProfile,
-  runId: args['run-id'] || new Date().toISOString().replace(/[:.]/g, '-')
+  runId: args['run-id'] || new Date().toISOString().replace(/[:.]/g, '-'),
+  transcriptPath: args.variant,
+  variantId: args.variant ? args.variant.replace(/\\/g, '/').replace(/\.json$/i, '') : undefined
 });
 
 const serialized = JSON.stringify(artifact, null, 2);

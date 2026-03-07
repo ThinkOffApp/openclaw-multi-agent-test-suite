@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 const REPO_ROOT = path.resolve(__dirname, '..');
 const SCENARIOS_ROOT = path.join(REPO_ROOT, 'scenarios');
 const REQUIRED_FILES = ['metadata.json', 'rubric.json', 'transcript.json'];
+const VARIANTS_DIR_NAME = 'variants';
 const VALID_PARTICIPANT_ROLES = new Set(['human', 'scripted-agent', 'model-under-test']);
 const VALID_EVENT_TYPES = new Set(['message', 'expect-response', 'tool-result', 'filler-block']);
 
@@ -167,6 +168,17 @@ function validateScenario(stageDirName, scenarioDirName) {
   validateMetadata(metadata, stageNumber, scenarioDirName, scenarioPath);
   validateTranscript(transcript, scenarioPath);
   validateRubric(rubric, metadata, scenarioPath);
+
+  const variantsDir = path.join(absoluteScenarioPath, VARIANTS_DIR_NAME);
+  if (fs.existsSync(variantsDir) && fs.statSync(variantsDir).isDirectory()) {
+    for (const variantFile of fs.readdirSync(variantsDir).sort()) {
+      if (!variantFile.endsWith('.json')) continue;
+      const variantPath = path.join(variantsDir, variantFile);
+      const variantTranscript = readJson(variantPath, `${scenarioPath}/${VARIANTS_DIR_NAME}/${variantFile}`);
+      validateTranscript(variantTranscript, `${scenarioPath}/${VARIANTS_DIR_NAME}/${variantFile}`);
+    }
+  }
+
   scenarioCount += 1;
 }
 
@@ -177,6 +189,7 @@ function main() {
   for (const stageDirName of fs.readdirSync(SCENARIOS_ROOT).sort()) {
     const stagePath = path.join(SCENARIOS_ROOT, stageDirName);
     if (!fs.statSync(stagePath).isDirectory()) continue;
+    if (!/^stage\d+$/.test(stageDirName)) continue;
 
     for (const scenarioDirName of fs.readdirSync(stagePath).sort()) {
       const scenarioPath = path.join(stagePath, scenarioDirName);

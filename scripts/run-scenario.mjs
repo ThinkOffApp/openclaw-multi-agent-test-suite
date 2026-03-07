@@ -21,7 +21,7 @@ function parseArgs(argv) {
 const args = parseArgs(process.argv.slice(2));
 const scenarioPath = args.scenario;
 if (!scenarioPath) {
-  console.error('Usage: node scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance [--plugin ./src/plugins/mock-echo-plugin.mjs] [--capability ./examples/mock-capability-profile.json] [--output ./runs/out.json]');
+  console.error('Usage: node scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance [--variant variants/paraphrase-a.json] [--plugin ./src/plugins/mock-echo-plugin.mjs] [--capability ./examples/mock-capability-profile.json] [--output ./runs/out.json]');
   process.exit(1);
 }
 
@@ -39,7 +39,9 @@ const artifact = await runScenario({
   scenarioPath,
   plugin,
   capabilityProfile,
-  runId
+  runId,
+  transcriptPath: args.variant,
+  variantId: args.variant ? args.variant.replace(/\\/g, '/').replace(/\.json$/i, '') : undefined
 });
 
 const serialized = JSON.stringify(artifact, null, 2);
