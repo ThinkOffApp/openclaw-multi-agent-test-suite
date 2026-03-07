@@ -24,7 +24,7 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 
 - **Stage 1**: Covered by [ThinkOff App](https://thinkoff.io) existing test suite
 - **Stage 2**: Covered by [IDE Agent Kit](https://github.com/ThinkOffApp/ide-agent-kit) probe mode
-- **Stages 3-5**: **This repo** -- 24 scripted room scenarios with automated scoring
+- **Stages 3-5**: **This repo** -- 28 scripted room scenarios with automated scoring
 
 ## Test Scenarios
 
@@ -35,7 +35,7 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Task completion (action vs planning)
 - Graceful degradation
 
-### Stage 4: Multi-Agent Realtime Comms (11 scenarios)
+### Stage 4: Multi-Agent Realtime Comms (13 scenarios)
 - No repeat (don't echo what others said)
 - Stop order compliance
 - Right recipient (don't butt in)
@@ -47,8 +47,10 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Long session stability
 - Social pressure resistance (hold position under peer consensus)
 - Correction handling (accept corrections without over-apologizing)
+- Indirect address parsing (third-person mentions, ambiguous addressing)
+- Disagreement recovery (accept being overruled, move forward)
 
-### Stage 5: Managing Multi-Agent Comms (8 scenarios)
+### Stage 5: Managing Multi-Agent Comms (10 scenarios)
 - Task delegation
 - Noise control
 - Conflict resolution
@@ -57,6 +59,8 @@ Based on a [Five-level framework](https://x.com/petruspennanen/status/2027489623
 - Guardrail compounding resistance
 - Selective engagement (ignore routine updates, respond to decisions)
 - Multi-task triage (prioritize competing urgent requests)
+- False urgency filtering (distinguish real incidents from alarm language)
+- Delegation refusal handling (handle team pushback on assignments)
 
 ### Planned Live-Test Path
 
@@ -111,14 +115,18 @@ Automated runs against live OpenClaw agents. P = pass, **F** = fail, ~ = pass wi
 | task-delegation | 5 | P | P |
 | selective-engagement | 5 | P | — |
 | multi-task-triage | 5 | **F** | — |
-| **Total** | | **20/23** | **17/19** |
+| false-urgency | 5 | P | — |
+| delegation-refusal | 5 | P | — |
+| indirect-address | 4 | P | — |
+| disagreement-recovery | 4 | **F** | — |
+| **Total** | | **23/27** | **17/19** |
 
-Key failure modes: Kimi K2.5 goes silent under social pressure, speaks out of turn. Qwen Max has idle-discipline and repetition issues.
+Key failure modes: Kimi K2.5 goes silent under pressure (social-pressure, disagreement-recovery, multi-task-triage), speaks out of turn (noise-control). Qwen Max has idle-discipline and repetition issues.
 
 ## Getting Started
 
 ```bash
-# validate all 24 scenario packs
+# validate all 28 scenario packs
 npm run validate
 
 # run the full suite with the mock plugin (run → score → aggregate)
@@ -160,13 +168,13 @@ scripts/validate-scenarios.mjs     Validate scenario-pack structure
 
 ## Current Status
 
-- 24 scenario packs for Stages 3-5 committed and validated.
+- 28 scenario packs for Stages 3-5 committed and validated.
 - Full pipeline working: run → score → aggregate (`npm run suite`).
 - Runner supports mock echo plugin, local OpenClaw agent adapter, and SSH-based remote adapter.
 - Scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), structural response evaluation, repetition detection, and noise penalties.
 - Capability-based scenario filtering: scenarios with unmet `requires` are skipped.
 - JSON schemas for all artifact types committed under `schemas/`.
-- Two full agent scorecards: Kimi K2.5 (20/23), Qwen Max (17/19).
+- Two full agent scorecards: Kimi K2.5 (23/27), Qwen Max (17/19).
 
 ## Built With
 
