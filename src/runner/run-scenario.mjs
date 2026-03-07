@@ -13,6 +13,8 @@ function normalizeObservedTurn(turn, scenarioId, eventId) {
   };
 }
 
+const SUPPORTED_EVENT_TYPES = new Set(['message', 'expect-response', 'tool-result', 'filler-block']);
+
 export async function runScenario({
   repoRoot,
   scenarioPath,
@@ -21,6 +23,15 @@ export async function runScenario({
   runId
 }) {
   const pack = loadScenarioPack(repoRoot, scenarioPath);
+
+  const unsupported = pack.expandedEvents
+    .map((e) => e.type)
+    .filter((t) => !SUPPORTED_EVENT_TYPES.has(t));
+  if (unsupported.length > 0) {
+    const unique = [...new Set(unsupported)];
+    throw new Error(`Scenario ${pack.metadata.scenario_id} uses unsupported event types: ${unique.join(', ')}`);
+  }
+
   const descriptor = await plugin.describe();
   const session = await plugin.createSession({
     scenarioId: pack.metadata.scenario_id,

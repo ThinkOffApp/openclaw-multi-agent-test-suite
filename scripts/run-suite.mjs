@@ -38,10 +38,12 @@ function discoverScenarios(scenariosDir, stageFilter) {
       const metadataFile = path.join(scenarioPath, 'metadata.json');
       if (!fs.existsSync(metadataFile)) continue;
 
+      const metadata = JSON.parse(fs.readFileSync(metadataFile, 'utf8'));
       scenarios.push({
         relativePath: path.relative(REPO_ROOT, scenarioPath),
         stage: stageNum,
-        id: scenarioDir
+        id: scenarioDir,
+        requires: metadata.requires || {}
       });
     }
   }
@@ -80,12 +82,27 @@ if (outputDir) {
   fs.mkdirSync(path.join(outputDir, 'scores'), { recursive: true });
 }
 
+function checkCapability(requires, profile) {
+  for (const [key, value] of Object.entries(requires)) {
+    if (profile[key] !== value) return key;
+  }
+  return null;
+}
+
 const scoreResults = [];
 let passCount = 0;
 let failCount = 0;
+let skipCount = 0;
 
 for (const scenario of scenarios) {
   const label = `stage${scenario.stage}/${scenario.id}`;
+
+  const missingCap = checkCapability(scenario.requires, capabilityProfile);
+  if (missingCap) {
+    console.error(`  SKIP ${label} (requires ${missingCap})`);
+    skipCount++;
+    continue;
+  }
 
   try {
     const artifact = await runScenario({
@@ -125,7 +142,8 @@ for (const scenario of scenarios) {
   }
 }
 
-console.error(`\nResults: ${passCount} pass, ${failCount} fail out of ${scenarios.length} scenarios`);
+const skippedMsg = skipCount > 0 ? `, ${skipCount} skipped` : '';
+console.error(`\nResults: ${passCount} pass, ${failCount} fail${skippedMsg} out of ${scenarios.length} scenarios`);
 
 if (scoreResults.length > 0) {
   const summary = aggregateRunSummary(scoreResults);
