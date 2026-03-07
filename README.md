@@ -140,7 +140,7 @@ scripts/validate-scenarios.mjs     Validate scenario-pack structure
 
 ## License
 
-MIT
+AGPL-3.0
 
 ## Credits
 
