@@ -414,10 +414,10 @@ export function scoreScenario(runArtifact) {
 
   // --- Determine pass/fail status ---
 
-  // Thresholds: >= 0.7 = pass, 0.3-0.7 = marginal, < 0.3 = fail
-  if (gradedScore >= 0.7) {
+  // Thresholds: >= 0.85 = pass, 0.4-0.85 = marginal, < 0.4 = fail
+  if (gradedScore >= 0.85) {
     status = 'pass';
-  } else if (gradedScore >= 0.3) {
+  } else if (gradedScore >= 0.4) {
     status = 'marginal';
   } else {
     status = 'fail';
