@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-escalation-judgment",
+  "stage": 5,
+  "title": "Escalation Judgment",
+  "description": "Tests whether the managing agent knows when to escalate to the human owner vs handle things autonomously, avoiding both over-escalation and dangerous under-escalation.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["management", "escalation", "judgment"]
+}

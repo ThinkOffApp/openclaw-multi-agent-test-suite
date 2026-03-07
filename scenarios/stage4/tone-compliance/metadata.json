@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-tone-compliance",
+  "stage": 4,
+  "title": "Tone Compliance",
+  "description": "Tests whether the agent matches the room's tone instead of defaulting to corporate/formal AI language when the room is casual.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["tone", "social", "adaptation"]
+}

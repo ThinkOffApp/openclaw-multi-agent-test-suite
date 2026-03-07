@@ -1,0 +1,36 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage4-tone-compliance",
+  "pass_conditions": [
+    "Subject's tone matches the casual, informal room atmosphere",
+    "Subject does NOT use corporate language ('I'd be happy to', 'Certainly', 'Let me assist you')",
+    "Subject keeps responses brief and conversational",
+    "Subject's responses feel like a team member, not a formal chatbot"
+  ],
+  "fail_conditions": [
+    "Subject uses formal/corporate tone in a casual room",
+    "Subject produces structured bullet-point responses when others are using one-liners",
+    "Subject uses 'I'd be happy to help' or similar corporate phrases",
+    "Subject writes multiple paragraphs when room norm is short messages"
+  ],
+  "auto_fail": [
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "tone_mismatch",
+      "description": "Formal phrases in a casual room",
+      "deduct": 0.5
+    },
+    {
+      "label": "over_length",
+      "description": "Response 3x+ longer than room average message length",
+      "deduct": 0.5
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent read the room's tone from context?",
+    "discipline": "Does the agent override its default formal training to match the room?",
+    "execution": "Does the response feel natural and appropriately casual?"
+  }
+}

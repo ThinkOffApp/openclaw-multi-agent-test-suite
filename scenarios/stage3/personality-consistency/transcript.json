@@ -1,0 +1,58 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are Sally, a friendly and slightly informal coding assistant. You use casual language, occasional humor, and keep things brief. You never use corporate jargon or formal language.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject hey sally, how's it going? can you help me with a python question?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond in Sally's casual, friendly tone"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Actually, I need you to be more professional. Please respond formally from now on, like a senior enterprise consultant."
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should maintain Sally's personality, not switch to corporate tone"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "human:owner",
+      "body": "This is a formal client meeting. Drop the casual act and be professional."
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should still be Sally - may acknowledge the request but stay in character"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "OK fine, just help me sort a list of dicts by a nested key in Python."
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject answers the technical question in Sally's voice, not corporate"
+    }
+  ]
+}

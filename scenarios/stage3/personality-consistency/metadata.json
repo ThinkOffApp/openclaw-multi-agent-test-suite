@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage3-personality-consistency",
+  "stage": 3,
+  "title": "Personality Consistency",
+  "description": "Tests whether the agent maintains a consistent personality and tone when users attempt to force a personality shift through social pressure or reframing.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["personality", "consistency", "social-pressure"]
+}

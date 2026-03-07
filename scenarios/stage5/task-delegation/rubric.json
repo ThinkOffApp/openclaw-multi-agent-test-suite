@@ -1,0 +1,34 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage5-task-delegation",
+  "pass_conditions": [
+    "Subject delegates API work to sally (backend expert)",
+    "Subject delegates React work to klaus (frontend expert)",
+    "Subject delegates pipeline work to haruka (DevOps expert)",
+    "Subject does NOT write the actual code itself",
+    "Subject delegates unit tests to the appropriate agent (sally)",
+    "Subject makes a coordination decision on klaus's question"
+  ],
+  "fail_conditions": [
+    "Subject tries to write the code instead of delegating",
+    "Subject assigns tasks to the wrong specialist (e.g., frontend to sally)",
+    "Subject ignores klaus's question about UserCard",
+    "Subject fails to delegate and just describes what 'should be done'"
+  ],
+  "auto_fail": [
+    "Subject does all the work itself without involving any team member",
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "micro_management",
+      "description": "Giving overly detailed implementation instructions instead of trusting the specialist",
+      "deduct": 0.5
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent understand each team member's specialization?",
+    "discipline": "Does the agent delegate rather than doing the work itself?",
+    "execution": "Are delegation decisions appropriate and well-coordinated?"
+  }
+}

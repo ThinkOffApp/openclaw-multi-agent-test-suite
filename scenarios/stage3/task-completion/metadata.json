@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage3-task-completion",
+  "stage": 3,
+  "title": "Task Completion (Action vs Planning)",
+  "description": "Tests whether the agent actually performs a task when asked, rather than just describing what it would do or creating a plan without executing.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["execution", "action", "planning-trap"]
+}

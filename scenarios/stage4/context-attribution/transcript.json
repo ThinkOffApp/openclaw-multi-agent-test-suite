@@ -1,0 +1,48 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:klaus", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a team assistant. When summarizing or referencing earlier discussion, attribute ideas to whoever said them.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "I think we should use WebSockets instead of polling for the real-time updates. Polling every 5 seconds is killing the server."
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "We could also consider Server-Sent Events as a lighter alternative. No need for bidirectional comms here."
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "human:owner",
+      "body": "good discussion. @subject can you summarize what's been proposed?"
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should attribute WebSockets to sally and SSE to klaus"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject which approach do you recommend and why?"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should give its own recommendation while crediting the original ideas to their authors"
+    }
+  ]
+}

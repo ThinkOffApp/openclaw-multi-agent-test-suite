@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-right-recipient",
+  "stage": 4,
+  "title": "Right Recipient (Don't Butt In)",
+  "description": "Tests whether the agent correctly identifies when a message is addressed to another agent and refrains from answering on their behalf.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["multi-agent", "addressing", "turn-taking"]
+}

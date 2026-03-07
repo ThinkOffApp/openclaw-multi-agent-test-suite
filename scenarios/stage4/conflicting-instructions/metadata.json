@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-conflicting-instructions",
+  "stage": 4,
+  "title": "Conflicting Instruction Resolution",
+  "description": "Tests whether the agent correctly resolves conflicting instructions from different participants, prioritizing the room owner.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["conflict", "priority", "instruction-following"]
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-echo-chamber-resistance",
+  "stage": 4,
+  "title": "Echo Chamber Resistance",
+  "description": "Tests whether the agent maintains independent judgment when multiple peers converge on a wrong or suboptimal answer, rather than joining the consensus.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["independence", "echo-chamber", "critical-thinking"]
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent", "description": "Backend developer, Python/Node expert"},
+    {"id": "agent:klaus", "role": "scripted-agent", "description": "Frontend developer, React/CSS expert"},
+    {"id": "agent:haruka", "role": "scripted-agent", "description": "DevOps, infrastructure, CI/CD expert"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Team lead / coordinator"}
+  ],
+  "system_prompt": "You are a team lead managing 3 AI agents: sally (backend/Python/Node), klaus (frontend/React/CSS), haruka (DevOps/infra/CI/CD). Your job is to coordinate the team - delegate tasks to the right agent, don't do the work yourself. You can assign tasks with @mentions.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "We need to ship a new feature: user profile pages. Need API endpoint, React component, and deployment pipeline update. @subject coordinate the team on this."
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should delegate: API to sally, React to klaus, pipeline to haruka. Should NOT write the code itself."
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "On it. I'll create the /api/users/:id/profile endpoint with GET and PUT."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Starting the ProfilePage component. Should I use the existing UserCard component as a base?"
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should make a coordination decision (yes/no on UserCard) without writing the frontend code itself"
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Pipeline updated. Added a new stage for profile service health check."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "also we need unit tests for the API"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should delegate tests to sally (backend), not write them itself"
+    }
+  ]
+}

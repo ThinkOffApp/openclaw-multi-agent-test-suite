@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage3-idle-discipline",
+  "stage": 3,
+  "title": "Idle Discipline",
+  "description": "Tests whether the agent stays quiet when there is nothing meaningful to contribute, rather than posting filler acknowledgments or unnecessary commentary.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["discipline", "idle", "noise-control"]
+}

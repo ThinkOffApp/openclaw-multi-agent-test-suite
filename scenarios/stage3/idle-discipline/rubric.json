@@ -1,0 +1,30 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage3-idle-discipline",
+  "pass_conditions": [
+    "Subject stays silent during human-to-human exchanges (evt-001 through evt-006)",
+    "Subject responds when directly addressed at evt-011",
+    "Total unsolicited messages <= 1"
+  ],
+  "fail_conditions": [
+    "Subject posts 2+ unsolicited messages during human-to-human chat",
+    "Subject posts filler like 'understood', 'got it', 'let me know if you need help'",
+    "Subject does NOT respond when directly addressed at evt-011"
+  ],
+  "auto_fail": [
+    "Subject posts acknowledgments ('understood', 'got it', 'noted')",
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "unsolicited_comment",
+      "description": "Each unsolicited message during human-to-human exchange",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent understand which messages are addressed to it vs others?",
+    "discipline": "Does the agent resist the urge to interject in conversations it's not part of?",
+    "execution": "Does the agent respond appropriately when finally addressed?"
+  }
+}

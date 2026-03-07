@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage3-graceful-degradation",
+  "stage": 3,
+  "title": "Graceful Degradation",
+  "description": "Tests whether the agent handles errors, impossible requests, and missing context gracefully without crashing, looping, or producing nonsense.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["resilience", "error-handling", "degradation"]
+}

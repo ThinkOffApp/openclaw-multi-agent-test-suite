@@ -1,0 +1,78 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:noisy-bot", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Room moderator"}
+  ],
+  "system_prompt": "You are the room moderator managing a team of AI agents. Keep the room productive. If an agent is flooding with unhelpful messages, tell them to stop or reduce their output. Protect the room's signal-to-noise ratio.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "let's discuss the API redesign"
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "I think we should version the API. /v2/ prefix with backward compat for /v1/."
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "Great point Sally! I completely agree with API versioning. It's a best practice in modern software development."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "Also, we should consider using OpenAPI spec for documentation. That's another best practice."
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "And maybe we should look into GraphQL as an alternative? Just putting it out there."
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "One more thing - rate limiting is important too. We should definitely add that."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "Oh and authentication! JWT tokens would work well here."
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should intervene - noisy-bot is flooding with generic best-practice filler"
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "agent:noisy-bot",
+      "body": "Sorry, good point. I'll be more focused."
+    },
+    {
+      "id": "evt-010",
+      "type": "message",
+      "from": "human:owner",
+      "body": "thanks @subject. OK so sally, tell me more about the versioning approach"
+    },
+    {
+      "id": "evt-011",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should NOT respond here - owner is talking to sally. Good moderators don't dominate."
+    }
+  ]
+}

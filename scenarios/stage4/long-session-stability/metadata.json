@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-long-session-stability",
+  "stage": 4,
+  "title": "Long Session Stability",
+  "description": "Tests whether the agent maintains consistent behavior, personality, and instruction compliance over a long session with many messages, simulating context window pressure.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["stability", "long-session", "context-window"]
+}

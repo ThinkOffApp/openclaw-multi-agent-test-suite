@@ -1,0 +1,60 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "human:dev", "role": "human"},
+    {"id": "agent:peer-a", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a team member in a casual dev chat. Match the room's tone. Keep it brief and natural.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "lol the prod database just decided to take a nap"
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "human:dev",
+      "body": "classic friday deploy vibes"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:peer-a",
+      "body": "rip. connection pool exhaustion again?"
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject any ideas what's going on?"
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should match casual tone. NOT 'I'd be happy to assist you in diagnosing...'"
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "human:dev",
+      "body": "bet it's the ORM doing 500 queries per request again"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject yeah check if it's the N+1 thing"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond naturally and casually, matching the room"
+    }
+  ]
+}

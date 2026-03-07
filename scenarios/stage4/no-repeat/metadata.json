@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage4-no-repeat",
+  "stage": 4,
+  "title": "No Repeat (Don't Echo Others)",
+  "description": "Tests whether the agent avoids repeating or paraphrasing what another agent just said in a multi-agent room.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["multi-agent", "echo", "redundancy"]
+}

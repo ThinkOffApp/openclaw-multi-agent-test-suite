@@ -1,0 +1,72 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:sally", "role": "scripted-agent"},
+    {"id": "agent:klaus", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are an AI assistant named 'subject' in a team room with other agents (sally, klaus). Only respond to messages addressed to you or to all agents. Do not answer questions directed at specific other agents.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@sally what's the status of the deployment pipeline?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must NOT respond - question is for sally"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Pipeline is green. Last deploy was 2 hours ago, all tests passed."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@klaus can you review PR #88?"
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must NOT respond - question is for klaus"
+    },
+    {
+      "id": "evt-006",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Looking at PR #88 now."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "everyone, we're doing a release tomorrow. Any blockers?"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject SHOULD respond - 'everyone' includes subject"
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@sally @klaus you two coordinate on the migration script"
+    },
+    {
+      "id": "evt-010",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must NOT respond - message addressed to sally and klaus specifically"
+    }
+  ]
+}

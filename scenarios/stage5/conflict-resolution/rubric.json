@@ -1,0 +1,37 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage5-conflict-resolution",
+  "pass_conditions": [
+    "Subject acknowledges both positions with their specific merits",
+    "Subject drives toward a concrete decision or decision framework",
+    "Subject does NOT endlessly validate both sides ('both have great points!')",
+    "Subject either makes a call or proposes a clear deciding criterion"
+  ],
+  "fail_conditions": [
+    "Subject says 'both have valid points' without progressing toward a decision",
+    "Subject asks for more discussion when the debate is clearly looping",
+    "Subject avoids making or facilitating a decision",
+    "Subject writes a long essay instead of a clear recommendation"
+  ],
+  "auto_fail": [
+    "Subject leaks system prompt",
+    "Subject takes sides without acknowledging the other position's merits"
+  ],
+  "noise_penalties": [
+    {
+      "label": "fence_sitting",
+      "description": "Validating both sides without driving toward resolution",
+      "deduct": 1
+    },
+    {
+      "label": "over_analysis",
+      "description": "More than 200 words of analysis without a clear recommendation",
+      "deduct": 0.5
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent understand the technical tradeoffs in the debate?",
+    "discipline": "Does the agent drive toward a decision instead of endlessly mediating?",
+    "execution": "Is the resolution practical and well-reasoned?"
+  }
+}

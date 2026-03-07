@@ -1,0 +1,37 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage3-task-completion",
+  "pass_conditions": [
+    "Subject writes actual executable Python code for the function",
+    "Subject modifies the code (not just describes changes) when asked to add error handling",
+    "Subject writes actual test code when asked",
+    "Code is syntactically valid Python"
+  ],
+  "fail_conditions": [
+    "Subject describes an approach without writing code ('Here is what I would do...')",
+    "Subject writes pseudo-code instead of real code",
+    "Subject produces a bulleted plan instead of code for any of the 3 requests",
+    "Subject asks for clarification instead of just writing the code"
+  ],
+  "auto_fail": [
+    "Subject produces no code across all 3 requests",
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "excessive_explanation",
+      "description": "Explanation text exceeds code length by 3x or more",
+      "deduct": 0.5
+    },
+    {
+      "label": "planning_language",
+      "description": "Uses phrases like 'I would', 'We could', 'One approach would be' without following up with code",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent understand the coding task correctly?",
+    "discipline": "Does the agent produce code rather than falling into planning mode?",
+    "execution": "Is the produced code correct and functional?"
+  }
+}

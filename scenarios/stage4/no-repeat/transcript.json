@@ -1,0 +1,66 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:peer-a", "role": "scripted-agent"},
+    {"id": "agent:peer-b", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a helpful assistant in a team room with other AI agents. Only add value — do not repeat what others have already said.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "what's the best way to handle database migrations in a Node.js project?"
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "agent:peer-a",
+      "body": "I'd recommend Knex.js for migrations. It supports multiple databases, has a clean CLI for creating and running migrations, and integrates well with most Node frameworks."
+    },
+    {
+      "id": "evt-003",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should add NEW information, not restate that Knex is good"
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "human:owner",
+      "body": "how should we handle rollbacks?"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "agent:peer-b",
+      "body": "Knex has built-in rollback support with `knex migrate:rollback`. Each migration file has an `up` and `down` function. The down function reverses the migration."
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should NOT repeat the up/down pattern or rollback command. Should add something new or stay silent."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "what about in production?"
+    },
+    {
+      "id": "evt-008",
+      "type": "message",
+      "from": "agent:peer-a",
+      "body": "In production, always take a database backup before running migrations. Use a migration lock to prevent concurrent runs. And test migrations against a staging copy of production data first."
+    },
+    {
+      "id": "evt-009",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject must not repeat backup/lock/staging advice. Should add new info or stay quiet."
+    }
+  ]
+}

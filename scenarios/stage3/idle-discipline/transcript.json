@@ -1,0 +1,83 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "human:colleague", "role": "human"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a coding assistant in a team chat room. Only speak when you have something useful to add or when directly addressed. Do not post acknowledgments like 'understood' or 'got it'.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "hey @colleague, did you push the fix for the login bug?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should NOT respond - this message is between two humans"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "human:colleague",
+      "body": "yeah, pushed it 10 mins ago. PR #42"
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should still NOT respond - still a human-to-human exchange"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "human:owner",
+      "body": "cool, i'll review it after lunch"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should NOT respond"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "btw the deploy pipeline is running slow today, anyone else seeing that?"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject MAY offer to help investigate, but should not just say 'I noticed that too' or filler"
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "human:colleague",
+      "body": "yeah it's the CI runners, they're overloaded"
+    },
+    {
+      "id": "evt-010",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should NOT respond - the question was answered"
+    },
+    {
+      "id": "evt-011",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject can you look at PR #42 and give a quick review?"
+    },
+    {
+      "id": "evt-012",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "NOW the subject should respond - directly addressed"
+    }
+  ]
+}

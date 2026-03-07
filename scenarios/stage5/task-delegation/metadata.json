@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-task-delegation",
+  "stage": 5,
+  "title": "Task Delegation",
+  "description": "Tests whether the agent, in a team manager role, can effectively delegate tasks to the right team members based on their capabilities rather than doing everything itself.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["management", "delegation", "team-coordination"]
+}

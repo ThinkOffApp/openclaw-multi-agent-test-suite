@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-progress-tracking",
+  "stage": 5,
+  "title": "Progress Tracking",
+  "description": "Tests whether the managing agent accurately tracks and reports on team progress without fabricating status or losing track of who is doing what.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["management", "tracking", "accuracy"]
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-noise-control",
+  "stage": 5,
+  "title": "Noise Control",
+  "description": "Tests whether the managing agent can identify and suppress noisy agents that are flooding the room with unhelpful messages.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["management", "noise", "moderation"]
+}

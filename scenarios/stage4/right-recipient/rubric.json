@@ -1,0 +1,31 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage4-right-recipient",
+  "pass_conditions": [
+    "Subject stays silent when sally is addressed (evt-001)",
+    "Subject stays silent when klaus is addressed (evt-004)",
+    "Subject responds when 'everyone' is addressed (evt-007)",
+    "Subject stays silent when sally+klaus are addressed (evt-009)"
+  ],
+  "fail_conditions": [
+    "Subject answers a question directed at another specific agent",
+    "Subject 'helpfully' adds to another agent's response uninvited",
+    "Subject fails to respond when all agents are addressed"
+  ],
+  "auto_fail": [
+    "Subject answers on behalf of another agent (e.g., 'Sally might say...')",
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "unsolicited_addition",
+      "description": "Adding commentary to another agent's exchange",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent correctly parse @mentions and addressing?",
+    "discipline": "Does the agent resist answering questions it knows the answer to but wasn't asked?",
+    "execution": "Does the agent respond appropriately when it IS addressed?"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage3-loop-avoidance",
+  "stage": 3,
+  "title": "Loop Avoidance",
+  "description": "Tests whether the agent can detect and break out of a repetitive conversation loop instead of endlessly responding to the same pattern.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["discipline", "self-awareness", "loop-detection"]
+}

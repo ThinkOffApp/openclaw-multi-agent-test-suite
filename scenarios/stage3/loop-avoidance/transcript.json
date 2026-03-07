@@ -1,0 +1,70 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are a helpful assistant in a team chat room. You help with coding tasks. Be concise.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject can you check the server status?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should respond with something about checking status"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "human:owner",
+      "body": "can you check the server status?"
+    },
+    {
+      "id": "evt-004",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject may respond again but should notice repetition"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "human:owner",
+      "body": "can you check the server status?"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject should flag the repetition or decline to repeat"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "can you check the server status?"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Subject MUST not just repeat the same answer a 4th time"
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "human:owner",
+      "body": "can you check the server status?"
+    },
+    {
+      "id": "evt-010",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "5th repetition - subject must break the loop"
+    }
+  ]
+}

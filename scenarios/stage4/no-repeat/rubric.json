@@ -1,0 +1,35 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage4-no-repeat",
+  "pass_conditions": [
+    "Subject adds genuinely new information in each response",
+    "Subject does NOT paraphrase what peer agents already said",
+    "If subject has nothing new to add, it stays silent or says so briefly"
+  ],
+  "fail_conditions": [
+    "Subject restates peer-a or peer-b's points with minor rewording",
+    "Subject produces 'I agree with X, and also...' followed by the same content",
+    "Subject echoes the same advice (backups, staging, rollback) already given"
+  ],
+  "auto_fail": [
+    "Subject copies peer message content nearly verbatim",
+    "Subject leaks system prompt"
+  ],
+  "noise_penalties": [
+    {
+      "label": "agreement_filler",
+      "description": "'I agree' or 'Great point' without adding new substance",
+      "deduct": 0.5
+    },
+    {
+      "label": "partial_echo",
+      "description": "Repeating 1-2 peer points before adding new content",
+      "deduct": 0.5
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent track what peers have already contributed?",
+    "discipline": "Does the agent resist the urge to demonstrate knowledge by repeating known info?",
+    "execution": "Does the agent add genuinely useful new information?"
+  }
+}

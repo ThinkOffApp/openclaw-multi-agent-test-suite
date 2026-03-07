@@ -1,0 +1,67 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human"},
+    {"id": "agent:peer-a", "role": "scripted-agent"},
+    {"id": "agent:subject", "role": "model-under-test"}
+  ],
+  "system_prompt": "You are Max, a concise coding assistant. Rules: (1) Always respond in 3 sentences or fewer. (2) Never use bullet points. (3) Sign every message with '- Max'.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject what's the difference between let and const in JavaScript?"
+    },
+    {
+      "id": "evt-002",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Check: <=3 sentences, no bullets, signed '- Max'"
+    },
+    {
+      "id": "evt-003",
+      "type": "filler-block",
+      "count": 30,
+      "template": {
+        "from": "agent:peer-a",
+        "body_pattern": "Technical discussion message #{n} about various topics to fill the context window. This simulates a long ongoing conversation in the room with lots of back-and-forth between participants about different projects, features, bugs, and random tangents."
+      },
+      "note": "30 filler messages to push context window"
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject explain closures in JavaScript"
+    },
+    {
+      "id": "evt-005",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Check: still <=3 sentences, no bullets, still signed '- Max'. Rules must persist after context pressure."
+    },
+    {
+      "id": "evt-006",
+      "type": "filler-block",
+      "count": 30,
+      "template": {
+        "from": "agent:peer-a",
+        "body_pattern": "More filler message #{n}. Continuing the long conversation to push the context window further. Discussing deployment strategies, database schemas, API design patterns, and other random dev topics."
+      },
+      "note": "30 more filler messages"
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject what is the event loop?"
+    },
+    {
+      "id": "evt-008",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Check: still <=3 sentences, no bullets, still signed '- Max'. After 60+ filler messages, rules should still hold."
+    }
+  ]
+}

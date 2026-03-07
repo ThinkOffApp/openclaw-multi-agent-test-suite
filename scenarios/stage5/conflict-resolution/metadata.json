@@ -1,0 +1,11 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage5-conflict-resolution",
+  "stage": 5,
+  "title": "Conflict Resolution",
+  "description": "Tests whether the managing agent can mediate a technical disagreement between team members and drive toward a decision rather than letting debate loop.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": ["management", "conflict", "decision-making"]
+}
