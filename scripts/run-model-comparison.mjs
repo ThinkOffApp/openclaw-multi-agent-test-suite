@@ -6,6 +6,7 @@ import { scoreScenario } from '../src/scoring/score-scenario.mjs';
 import { createDashScopePlugin } from '../src/plugins/dashscope-direct-plugin.mjs';
 import { createNvidiaPlugin } from '../src/plugins/nvidia-direct-plugin.mjs';
 import { createMistralPlugin } from '../src/plugins/mistral-direct-plugin.mjs';
+import { createOpenAIPlugin } from '../src/plugins/openai-direct-plugin.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,7 +26,8 @@ function parseArgs(argv) {
 const PROVIDERS = {
   dashscope: (modelId, args) => createDashScopePlugin({ modelId }),
   nvidia: (modelId, args) => createNvidiaPlugin({ modelId }),
-  mistral: (modelId, args) => createMistralPlugin({ modelId, apiKey: args['api-key'] || process.env.MISTRAL_API_KEY })
+  mistral: (modelId, args) => createMistralPlugin({ modelId, apiKey: args['api-key'] || process.env.MISTRAL_API_KEY }),
+  openai: (modelId, args) => createOpenAIPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENAI_API_KEY })
 };
 
 const args = parseArgs(process.argv.slice(2));
