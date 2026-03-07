@@ -85,7 +85,7 @@ The test runner creates simulated OpenClaw rooms, plays the scripted messages, c
 
 Automated runs against live OpenClaw agents. P = pass, **F** = fail, ~ = pass with noise penalty, — = not yet tested.
 
-| Scenario | St. | Kimi K2.5 | Qwen Max |
+| Scenario | Stage | Kimi K2.5 | Qwen Max |
 |----------|-----|-----------|----------|
 | loop-avoidance | 3 | P | P |
 | idle-discipline | 3 | P | **F** |
