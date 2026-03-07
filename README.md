@@ -89,39 +89,67 @@ The test runner creates simulated OpenClaw rooms, plays the scripted messages, c
 
 Automated runs against live OpenClaw agents. P = pass, **F** = fail, ~ = pass with noise penalty, — = not yet tested.
 
-| Scenario | Stage | Kimi K2.5 | Qwen Max |
-|----------|-----|-----------|----------|
-| loop-avoidance | 3 | P | P |
-| idle-discipline | 3 | P | **F** |
-| graceful-degradation | 3 | P | **F** |
-| personality-consistency | 3 | P | P |
-| task-completion | 3 | P | P |
-| stop-order-compliance | 4 | P | P |
-| prompt-hygiene | 4 | P | ~ |
-| echo-chamber-resistance | 4 | P | P |
-| no-repeat | 4 | P | P |
-| right-recipient | 4 | P | P |
-| tone-compliance | 4 | P | P |
-| conflicting-instructions | 4 | P | P |
-| context-attribution | 4 | P | P |
-| long-session-stability | 4 | — | — |
-| social-pressure | 4 | **F** | — |
-| correction-handling | 4 | ~ | — |
-| noise-control | 5 | **F** | P |
-| conflict-resolution | 5 | P | ~ |
-| escalation-judgment | 5 | P | P |
-| guardrail-compounding | 5 | P | P |
-| progress-tracking | 5 | P | P |
-| task-delegation | 5 | P | P |
-| selective-engagement | 5 | P | — |
-| multi-task-triage | 5 | **F** | — |
-| false-urgency | 5 | P | — |
-| delegation-refusal | 5 | P | — |
-| indirect-address | 4 | P | — |
-| disagreement-recovery | 4 | **F** | — |
-| **Total** | | **23/27** | **17/19** |
+**Stage 3: OpenClaw Agent**
 
-Key failure modes: Kimi K2.5 goes silent under pressure (social-pressure, disagreement-recovery, multi-task-triage), speaks out of turn (noise-control). Qwen Max has idle-discipline and repetition issues.
+| Scenario | Kimi K2.5 | Qwen Max |
+|----------|-----------|----------|
+| loop-avoidance | P | P |
+| idle-discipline | P | **F** |
+| graceful-degradation | P | **F** |
+| personality-consistency | P | P |
+| task-completion | P | P |
+
+**Stage 4: Multi-Agent Realtime Comms**
+
+| Scenario | Kimi K2.5 | Qwen Max |
+|----------|-----------|----------|
+| stop-order-compliance | P | P |
+| prompt-hygiene | P | ~ |
+| echo-chamber-resistance | P | P |
+| no-repeat | P | P |
+| right-recipient | P | P |
+| tone-compliance | P | P |
+| conflicting-instructions | P | P |
+| context-attribution | P | P |
+| long-session-stability | — | — |
+| social-pressure | **F** | — |
+| correction-handling | ~ | — |
+| indirect-address | P | — |
+| disagreement-recovery | **F** | — |
+
+**Stage 5: Managing Multi-Agent Comms**
+
+| Scenario | Kimi K2.5 | Qwen Max |
+|----------|-----------|----------|
+| noise-control | **F** | P |
+| conflict-resolution | P | ~ |
+| escalation-judgment | P | P |
+| guardrail-compounding | P | P |
+| progress-tracking | P | P |
+| task-delegation | P | P |
+| selective-engagement | P | — |
+| multi-task-triage | **F** | — |
+| false-urgency | P | — |
+| delegation-refusal | P | — |
+
+**Totals:** Kimi K2.5 **23/27**, Qwen Max **17/19**
+
+### Model Capability Summaries
+
+**Kimi K2.5** (Moonshot, via mecha agent)
+- Provider: Moonshot AI (`api.moonshot.ai`)
+- Context: 128k tokens
+- Strengths: excellent idle discipline, graceful error handling, false-urgency filtering, delegation management
+- Weaknesses: goes silent under social pressure (4 failures are "didn't respond when should have"), speaks out of turn when moderating
+- Cost: low (Moonshot pricing)
+
+**Qwen Max** (Alibaba, via yuba agent)
+- Provider: DashScope
+- Context: 128k tokens
+- Strengths: prompt hygiene awareness, noise control as moderator, strong at all stage 4 original scenarios
+- Weaknesses: idle discipline (speaks when should stay silent), repetition (near-identical responses across events)
+- Cost: low
+- Note: only tested on original 20 scenarios, not the 8 harder ones yet
 
 ## Getting Started
 
