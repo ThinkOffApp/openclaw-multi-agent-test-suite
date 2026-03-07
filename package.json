@@ -2,6 +2,7 @@
   "name": "openclaw-multi-agent-test-suite",
   "version": "0.1.0",
   "private": false,
+  "license": "AGPL-3.0-only",
   "type": "module",
   "scripts": {
     "validate": "node ./scripts/validate-scenarios.mjs",
