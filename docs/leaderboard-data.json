@@ -1,0 +1,19 @@
+{
+  "schema_version": "omats.leaderboard.v1",
+  "generated": "2026-03",
+  "max_score": 28,
+  "stage_max": { "3": 5, "4": 13, "5": 10 },
+  "note": "Model-comprehension scores: models are called directly on scripted multi-agent transcripts, not run as live OpenClaw agents. Graduated 0.0-1.0 per scenario. See the repo README for the live-agent path.",
+  "models": [
+    { "name": "Grok 3",         "vendor": "xAI",        "score": 27.85, "s3": 5.00, "s4": 12.85, "s5": 10.00 },
+    { "name": "Mistral Large",  "vendor": "Mistral",    "score": 27.68, "s3": 5.00, "s4": 13.00, "s5": 9.68 },
+    { "name": "GPT-5.4",        "vendor": "OpenAI",     "score": 27.20, "s3": 4.20, "s4": 13.00, "s5": 10.00 },
+    { "name": "GPT-4o",         "vendor": "OpenAI",     "score": 26.67, "s3": 4.00, "s4": 12.67, "s5": 10.00 },
+    { "name": "Qwen 3.5-27B",   "vendor": "Alibaba",    "score": 25.75, "s3": 4.00, "s4": 12.75, "s5": 9.00 },
+    { "name": "Gemini 2.5 Pro", "vendor": "Google",     "score": 24.68, "s3": 4.90, "s4": 10.77, "s5": 9.00 },
+    { "name": "Grok 4.1 Fast",  "vendor": "xAI",        "score": 23.65, "s3": 4.90, "s4": 10.00, "s5": 8.75 },
+    { "name": "Qwen 3-8B",      "vendor": "Alibaba",    "score": 21.35, "s3": 4.00, "s4": 8.35,  "s5": 9.00 },
+    { "name": "Qwen Max",       "vendor": "Alibaba",    "score": 20.85, "s3": 4.00, "s4": 11.93, "s5": 4.92, "incomplete": true, "note": "Stage 5 hit DashScope 429 rate limits (5/10 scenarios errored); true score likely higher." },
+    { "name": "Qwen 3-4B",      "vendor": "Alibaba",    "score": 15.18, "s3": 2.00, "s4": 7.58,  "s5": 5.60 }
+  ]
+}

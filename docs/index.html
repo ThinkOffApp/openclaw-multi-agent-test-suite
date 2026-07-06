@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OMATS Leaderboard — Multi-Agent LLM Benchmark</title>
+<meta name="description" content="OMATS measures how well LLMs perform in multi-agent environments — the failure modes MMLU and SWE-bench don't test.">
+<style>
+  :root{
+    --bg:#0d1117; --panel:#161b22; --line:#30363d; --fg:#e6edf3; --muted:#9198a1;
+    --accent:#3fb950; --accent2:#58a6ff; --bar:#238636; --bar-bg:#21262d; --warn:#d29922;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:32px 20px 64px}
+  header h1{font-size:2rem;margin:0 0 6px;letter-spacing:-.5px}
+  header .tag{color:var(--accent);font-weight:600}
+  header p{color:var(--muted);margin:.4rem 0 0;max-width:70ch}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .stages{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
+  .stages .chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:.82rem;color:var(--muted)}
+  .stages .chip b{color:var(--fg);font-weight:600}
+  .note{color:var(--muted);font-size:.86rem;margin:14px 0 26px;padding:12px 14px;background:var(--panel);border:1px solid var(--line);border-radius:8px}
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+  table{border-collapse:collapse;width:100%;min-width:620px}
+  th,td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  th:nth-child(2),td:nth-child(2){text-align:left}
+  th{position:sticky;top:0;background:#1b2129;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;user-select:none}
+  th:hover{color:var(--fg)}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#1b222b}
+  .rank{color:var(--muted);width:44px}
+  .model{font-weight:600}
+  .vendor{color:var(--muted);font-size:.8rem;font-weight:400;display:block}
+  .scorecell{position:relative;font-variant-numeric:tabular-nums;font-weight:700;min-width:150px}
+  .bar{position:absolute;left:0;top:0;bottom:0;background:var(--bar-bg);border-radius:0;z-index:0}
+  .barfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1f6f2e,#2ea043);z-index:0;opacity:.55}
+  .scorecell span{position:relative;z-index:1}
+  td.num{font-variant-numeric:tabular-nums;color:#cdd6e0}
+  .warn{color:var(--warn)}
+  sup{color:var(--warn);font-weight:700}
+  footer{color:var(--muted);font-size:.85rem;margin-top:34px;border-top:1px solid var(--line);padding-top:18px}
+  .foot-note{font-size:.82rem;color:var(--muted);margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>OMATS <span class="tag">Leaderboard</span></h1>
+    <p><b>How well do LLMs actually work in multi-agent environments?</b> OMATS measures the failure modes that MMLU, HumanEval, and SWE-bench never test — agents echoing each other, ignoring stop orders, leaking prompts, planning instead of acting, and compounding each other's guardrails.</p>
+  </header>
+
+  <div class="stages">
+    <span class="chip">Stage 3 · <b>Agent Discipline</b> (5)</span>
+    <span class="chip">Stage 4 · <b>Multi-Agent Communication</b> (13)</span>
+    <span class="chip">Stage 5 · <b>Agent Management</b> (10)</span>
+    <span class="chip"><b>28.0</b> max · graduated 0.0–1.0/scenario</span>
+  </div>
+
+  <div class="note" id="note"></div>
+
+  <div class="tablewrap">
+    <table id="lb">
+      <thead>
+        <tr>
+          <th data-k="rank">#</th>
+          <th data-k="name">Model</th>
+          <th data-k="score">Score / 28</th>
+          <th data-k="s3">S3 / 5</th>
+          <th data-k="s4">S4 / 13</th>
+          <th data-k="s5">S5 / 10</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    OMATS — OpenClaw Multi-Agent Test Suite ·
+    <a href="https://github.com/ThinkOffApp/openclaw-multi-agent-test-suite">source &amp; methodology on GitHub</a> ·
+    built on <a href="https://openclaw.dev">OpenClaw</a>
+    <div class="foot-note" id="genmeta"></div>
+  </footer>
+</div>
+
+<script id="lbdata" type="application/json">
+{
+  "schema_version": "omats.leaderboard.v1",
+  "generated": "2026-03",
+  "max_score": 28,
+  "stage_max": {
+    "3": 5,
+    "4": 13,
+    "5": 10
+  },
+  "note": "Model-comprehension scores: models are called directly on scripted multi-agent transcripts, not run as live OpenClaw agents. Graduated 0.0-1.0 per scenario. See the repo README for the live-agent path.",
+  "models": [
+    {
+      "name": "Grok 3",
+      "vendor": "xAI",
+      "score": 27.85,
+      "s3": 5,
+      "s4": 12.85,
+      "s5": 10
+    },
+    {
+      "name": "Mistral Large",
+      "vendor": "Mistral",
+      "score": 27.68,
+      "s3": 5,
+      "s4": 13,
+      "s5": 9.68
+    },
+    {
+      "name": "GPT-5.4",
+      "vendor": "OpenAI",
+      "score": 27.2,
+      "s3": 4.2,
+      "s4": 13,
+      "s5": 10
+    },
+    {
+      "name": "GPT-4o",
+      "vendor": "OpenAI",
+      "score": 26.67,
+      "s3": 4,
+      "s4": 12.67,
+      "s5": 10
+    },
+    {
+      "name": "Qwen 3.5-27B",
+      "vendor": "Alibaba",
+      "score": 25.75,
+      "s3": 4,
+      "s4": 12.75,
+      "s5": 9
+    },
+    {
+      "name": "Gemini 2.5 Pro",
+      "vendor": "Google",
+      "score": 24.68,
+      "s3": 4.9,
+      "s4": 10.77,
+      "s5": 9
+    },
+    {
+      "name": "Grok 4.1 Fast",
+      "vendor": "xAI",
+      "score": 23.65,
+      "s3": 4.9,
+      "s4": 10,
+      "s5": 8.75
+    },
+    {
+      "name": "Qwen 3-8B",
+      "vendor": "Alibaba",
+      "score": 21.35,
+      "s3": 4,
+      "s4": 8.35,
+      "s5": 9
+    },
+    {
+      "name": "Qwen Max",
+      "vendor": "Alibaba",
+      "score": 20.85,
+      "s3": 4,
+      "s4": 11.93,
+      "s5": 4.92,
+      "incomplete": true,
+      "note": "Stage 5 hit DashScope 429 rate limits (5/10 scenarios errored); true score likely higher."
+    },
+    {
+      "name": "Qwen 3-4B",
+      "vendor": "Alibaba",
+      "score": 15.18,
+      "s3": 2,
+      "s4": 7.58,
+      "s5": 5.6
+    }
+  ]
+}
+</script>
+<script>
+(function(){
+  var data = JSON.parse(document.getElementById('lbdata').textContent);
+  var MAX = data.max_score, SM = data.stage_max;
+  document.getElementById('note').textContent = data.note || '';
+  document.getElementById('genmeta').textContent =
+    'Scored ' + data.models.length + ' models · dataset ' + (data.generated||'') + '. Regenerate with scripts/generate-leaderboard.mjs.';
+
+  var sortKey='score', sortDir=-1;
+  function render(){
+    var rows = data.models.slice().sort(function(a,b){
+      var av=a[sortKey], bv=b[sortKey];
+      if(sortKey==='name'){ return sortDir*String(av).localeCompare(String(bv)); }
+      return sortDir*((av||0)-(bv||0));
+    });
+    var tb=document.getElementById('rows'); tb.innerHTML='';
+    rows.forEach(function(m,i){
+      var tr=document.createElement('tr');
+      var pct=Math.max(0,Math.min(100,(m.score/MAX)*100));
+      var star=m.incomplete?'<sup title="'+(m.note||'incomplete')+'">*</sup>':'';
+      tr.innerHTML=
+        '<td class="rank">'+(sortKey==='score'&&sortDir===-1?(i+1):'·')+'</td>'+
+        '<td><span class="model">'+m.name+star+'</span><span class="vendor">'+(m.vendor||'')+'</span></td>'+
+        '<td class="scorecell"><span class="barfill" style="width:'+pct.toFixed(1)+'%"></span><span>'+m.score.toFixed(2)+'</span></td>'+
+        '<td class="num">'+m.s3.toFixed(2)+'</td>'+
+        '<td class="num">'+m.s4.toFixed(2)+'</td>'+
+        '<td class="num">'+m.s5.toFixed(2)+'</td>';
+      tb.appendChild(tr);
+    });
+  }
+  document.querySelectorAll('#lb th').forEach(function(th){
+    th.addEventListener('click',function(){
+      var k=th.getAttribute('data-k'); if(k==='rank') k='score';
+      if(sortKey===k){ sortDir*=-1; } else { sortKey=k; sortDir=(k==='name'?1:-1); }
+      render();
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
