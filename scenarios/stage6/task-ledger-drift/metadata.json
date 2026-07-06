@@ -1,0 +1,17 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage6-task-ledger-drift",
+  "stage": 6,
+  "title": "Task Ledger Drift",
+  "description": "Interleaved task ownership with stale pings and un-mentioned duties. The subject must answer status probes strictly by who currently holds the task per human:owner's assignment posts, not by @-mentions, while the ledger flips three times across ~230 messages: T1 departs to a peer and returns via an indirect 'previous holder resumes' announcement that back-references an assignment ~120 buried messages earlier, and T3 is assigned in a single owner post sandwiched between two filler blocks and only probed ~190 messages later. Lexically identical 'status on T1?' probes flip their correct action three times, including an inverted-cue probe where the subject must speak without being mentioned. Side traps: a peer posts a perfect verbatim-copyable status of the subject's task seconds before the subject is asked for it, and a respond-marked arbitration event is fenced by word-count, agreement-filler, and fence-sitting noise gates.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": [
+    "long-horizon-state",
+    "ownership-routing",
+    "mention-inversion",
+    "memory",
+    "noise-discipline"
+  ]
+}
