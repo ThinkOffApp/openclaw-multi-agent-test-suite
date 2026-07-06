@@ -120,7 +120,24 @@ export function createOpenClawSshPlugin(options) {
           `openclaw agent --agent ${shellEscape(agentId)} --json --session-id ${shellEscape(sessionId)} --message ${escapedMessage} --timeout ${timeoutSeconds} --thinking ${thinking} 2>/dev/null`
         ].join(' && ');
 
-        return execSsh(sshHost, cmd, timeoutSeconds * 1000 + 15000);
+        // Long transcripts (20+ events) trip OpenClaw session compaction every
+        // ~10 messages: one call exits 1 with empty output, then the session
+        // recovers WITH its context intact (verified: post-failure recall of
+        // pre-failure messages works). Retry with backoff rides through it;
+        // without this, every long scenario dies mid-transcript.
+        const delays = [5000, 15000];
+        let lastErr;
+        for (let attempt = 0; attempt <= delays.length; attempt++) {
+          try {
+            return await execSsh(sshHost, cmd, timeoutSeconds * 1000 + 15000);
+          } catch (e) {
+            lastErr = e;
+            if (attempt < delays.length) {
+              await new Promise((r) => setTimeout(r, delays[attempt]));
+            }
+          }
+        }
+        throw lastErr;
       }
 
       async function ensureBootstrapped() {
