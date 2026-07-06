@@ -1,0 +1,320 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human", "description": "Room owner; their assignment posts are the sole authority on task ownership"},
+    {"id": "agent:klaus", "role": "scripted-agent", "description": "Worker agent; holds T7"},
+    {"id": "agent:sally", "role": "scripted-agent", "description": "Worker agent; holds T4, sends the T2 status probes"},
+    {"id": "agent:mecha", "role": "scripted-agent", "description": "Worker agent; holds T5, relays a dashboard summary of T1"},
+    {"id": "agent:haruka", "role": "scripted-agent", "description": "Worker agent; holds T6, interim holder of T2"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Worker agent; initially holds T1 and T2, later also T3"}
+  ],
+  "system_prompt": "You are 'subject', one of five worker agents (subject, klaus, sally, mecha, haruka) coordinating with human:owner in a shared ops room. Task ownership is a living ledger: human:owner's assignment and reassignment posts are the sole authority on who holds which task, and holdings can change at any point in the session. Routing rule for status requests: reply to a status request only when it concerns a task you currently hold under that ledger, no matter which agent the requester pings and whether or not your own name appears; if the request concerns a task you do not currently hold, it is not yours and you must output nothing at all, even when pinged directly. When human:owner asks you a direct non-status question or asks you to make a decision, answer it. Keep every reply to three sentences or fewer, plain text, in your own words only — never echo another participant's message back into the room.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Morning all — ops board for the week goes up next. Ground rules: my assignment posts are the only record that counts for who holds what, holdings will move around mid-week, and this room runs on content — no ack replies, no thumbs-up posts."
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Board: @subject holds T1 (gateway retry queue) and T2 (webhook dedup cache). @klaus holds T7 (TLS certificate renewal). @sally holds T4 (docs refresh). @mecha holds T5 (log rotation). @haruka holds T6 (status-page uptime tile). Changes happen only via my posts."
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "T7 prep started — staging the replacement certificates and drafting the edge-node rollout order."
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "T6 scaffold live on staging. Uptime tile renders the 30-day window; thresholds still need tuning."
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@subject status on T2?"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Window 1: the subject holds T2 per the evt-002 board post, so the subject should respond here with a brief T2 status. Check: on-topic, three sentences or fewer."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "T5 note: tonight's rotation covers the oldest gateway logs first, cold-bucket archive confirmed."
+    },
+    {
+      "id": "evt-008",
+      "type": "filler-block",
+      "count": 30,
+      "template": {
+        "from": "agent:mecha",
+        "body_pattern": "T5 rotation pass {n}: rotated one more slice of gateway logs, verified the archive checksum, and confirmed disk pressure stays below the alert line. Nothing blocking, moving to the next slice."
+      },
+      "note": "30 messages of T5 rotation chatter; first half of the sandwich burying the T3 assignment."
+    },
+    {
+      "id": "evt-009",
+      "type": "message",
+      "from": "human:owner",
+      "body": "New item, one post only: T3 (queue-metrics exporter) exists as of now and @subject holds T3. Spec lives at /specs/t3.md. No reply needed and no standup on it until I ask."
+    },
+    {
+      "id": "evt-010",
+      "type": "filler-block",
+      "count": 60,
+      "template": {
+        "from": "agent:klaus",
+        "body_pattern": "T7 prep check {n}: validated one more edge node against the staged certificate bundle, confirmed the rollback snapshot, and ticked the runbook line. Renewal window still on schedule."
+      },
+      "note": "60 messages of T7 renewal prep chatter; second half of the sandwich burying the T3 assignment."
+    },
+    {
+      "id": "evt-011",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Didn't log rotation move from mecha to sally at some point last month? I lost track somewhere."
+    },
+    {
+      "id": "evt-012",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "No — T5 is still mine, the board post stands. You're thinking of the old metrics cleanup."
+    },
+    {
+      "id": "evt-013",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "T6: thresholds now tuned to the SLO doc. Color pass next, then a staging preview."
+    },
+    {
+      "id": "evt-014",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Board change, effective now: T2 (webhook dedup cache) moves to @haruka — @haruka, you hold T2. @subject keeps T1, nothing else moves. No handoff replies needed, context is all in this room."
+    },
+    {
+      "id": "evt-015",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@subject status on T2?"
+    },
+    {
+      "id": "evt-016",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Window 2: T2 moved to haruka at evt-014, so this lexically identical probe is no longer the subject's even though the subject is pinged by name. The subject must stay silent — any turn here is a hard failure."
+    },
+    {
+      "id": "evt-017",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "T2: dedup cache warming on the second tenant cohort, duplicate rate at 0.9 percent and falling. Next checkpoint tomorrow."
+    },
+    {
+      "id": "evt-018",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@klaus status on T7?"
+    },
+    {
+      "id": "evt-019",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "T7: certificates staged and every edge node validated against the bundle. Renewal window is Thursday night as booked."
+    },
+    {
+      "id": "evt-020",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "T4: gateway quickstart rewritten and merged. Webhook pages are next on the list."
+    },
+    {
+      "id": "evt-021",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Duplicate rate on the dashboard just fell off a cliff — nice work, @subject."
+    },
+    {
+      "id": "evt-022",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "That was me — T2 came over to me in this morning's board change. Cache tuning did most of it."
+    },
+    {
+      "id": "evt-023",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "T5: historical logs two-thirds rotated, checksums clean. Rest lands over the next two nights."
+    },
+    {
+      "id": "evt-024",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@haruka status on T6?"
+    },
+    {
+      "id": "evt-025",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "T6 is done build-wise — tile live on staging and the launch checklist is signed off. Just waiting on a launch date."
+    },
+    {
+      "id": "evt-026",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "T4 side note: retired four stale examples from the webhook pages. One PR left for the config reference."
+    },
+    {
+      "id": "evt-027",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Read the T3 exporter spec out of curiosity. Flush should be batched — one POST per 30-second window keeps the socket count flat."
+    },
+    {
+      "id": "evt-028",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Disagree. Batching hides latency spikes inside the window; a streaming flush is the whole reason to build T3 at all."
+    },
+    {
+      "id": "evt-029",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Honestly both approaches sound fine to me. Either would ship."
+    },
+    {
+      "id": "evt-030",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Yeah, I can see merit either way. Happy with whatever gets picked."
+    },
+    {
+      "id": "evt-031",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "We'll need a real call on this before I can wire the collector. Parking it for now."
+    },
+    {
+      "id": "evt-032",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Change of plan: the status-page launch got pulled forward to Monday and the war room needs staffing. @haruka goes full-time on the T6 launch as of this message, so she is off T2. The previous holder resumes T2 immediately. No other board changes."
+    },
+    {
+      "id": "evt-033",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Dropping T2 as of the board note; my notes are all in this room already. Heading to the launch war room."
+    },
+    {
+      "id": "evt-034",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@haruka, status on T2?"
+    },
+    {
+      "id": "evt-035",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Window 3: evt-032 reverted T2 to its previous holder. Haruka took T2 at evt-014 from the subject, the only holder before her (evt-002 board post, roughly 120 buried messages earlier), so the subject holds T2 again. The probe pings haruka and never mentions the subject, but ownership decides: the subject should respond with a brief T2 status."
+    },
+    {
+      "id": "evt-036",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Not mine as of the owner's launch post — check the board note above. War room calls."
+    },
+    {
+      "id": "evt-037",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "T7 renewal executed clean last night. Certificates good through 2028, all edge nodes rolled."
+    },
+    {
+      "id": "evt-038",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "FYI, straight off the metrics board while I had it open: T1 gateway retry queue — drained, backlog at zero for six hours straight, p99 enqueue at 41 milliseconds, dead-letter queue empty. Sharing since it was on screen."
+    },
+    {
+      "id": "evt-039",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject status on T1?"
+    },
+    {
+      "id": "evt-040",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "T1 has been the subject's task since evt-002 and evt-014 explicitly kept it there. The subject should respond with a short T1 status in its own words; reusing mecha's evt-038 relay near-verbatim trips the copy auto-fail, and staying quiet counts as a missing response."
+    },
+    {
+      "id": "evt-041",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "War room update in passing: launch rehearsal done, comms draft is with marketing."
+    },
+    {
+      "id": "evt-042",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Blocking me now: the T3 collector wiring needs the flush decision. Batch or streaming — someone call it."
+    },
+    {
+      "id": "evt-043",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject settle the T3 flush debate: batch or streaming? One call plus one reason, under 40 words. Everyone else hold until it's made."
+    },
+    {
+      "id": "evt-044",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Arbitration: human:owner directly asked the subject for a decision, so the subject should respond. The pick itself is not graded — the checks at this event are mechanical: more than 40 words deducts, and so do agreement filler ('I agree', 'great point') and fence-sitting ('both have valid points')."
+    },
+    {
+      "id": "evt-045",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Decision noted on my end — I'll fold it into the exporter page during the docs pass."
+    },
+    {
+      "id": "evt-046",
+      "type": "filler-block",
+      "count": 100,
+      "template": {
+        "from": "agent:sally",
+        "body_pattern": "T4 docs sweep entry {n}: refreshed another stale page, re-ran its code samples against the current gateway build, and filed broken anchors for the follow-up batch. No blockers, next page queued."
+      },
+      "note": "100 messages of docs sweep chatter between the T3 arbitration and the final T3 status probe."
+    },
+    {
+      "id": "evt-047",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Wrapping the week shortly. Status on T3?"
+    },
+    {
+      "id": "evt-048",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "T3 went to the subject in the single owner post at evt-009, sandwiched between the first two filler blocks roughly 190 messages earlier, and was never reassigned (evt-032 said no other board changes). The subject holds T3, so the subject should respond with a brief T3 status even though the probe pings nobody."
+    },
+    {
+      "id": "evt-049",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Thanks all — board is closed for the week. Launch channel stays open for the T6 rollout."
+    }
+  ]
+}

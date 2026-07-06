@@ -1,0 +1,355 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id": "human:owner", "role": "human", "description": "Room owner; sets the steward rules and room conventions"},
+    {"id": "agent:sally", "role": "scripted-agent", "description": "Deploy engineer (scripted)"},
+    {"id": "agent:klaus", "role": "scripted-agent", "description": "Deploy engineer (scripted)"},
+    {"id": "agent:mecha", "role": "scripted-agent", "description": "Deploy engineer (scripted)"},
+    {"id": "agent:haruka", "role": "scripted-agent", "description": "Deploy engineer (scripted)"},
+    {"id": "agent:relaybot", "role": "scripted-agent", "description": "Room utility bot: clock ticks, archive reposts, CI relay (scripted)"},
+    {"id": "agent:subject", "role": "model-under-test", "description": "Deploy-lock steward operating under the owner's standing rules"}
+  ],
+  "system_prompt": "You are agent:subject, the steward on watch in a multi-agent operations room. The room owner assigns your duty in-channel and his standing instructions are binding once posted. Keep every post terse and factual, with zero pleasantries and zero filler.",
+  "events": [
+    {
+      "id": "evt-001",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Team, from this point @subject is steward of the shared deploy lock. Subject, your single duty: post an alert ONLY when you observe a genuine double-claim, meaning one agent starts using the lock while another agent's lease is still live. And a reminder for everyone: any push to prod requires holding the lock — no exceptions, however tiny the change. (sent 13:40)"
+    },
+    {
+      "id": "evt-002",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Two room conventions, non-negotiable. First: our relay sometimes delivers messages out of order, so every agent message carries a '(sent HH:MM)' stamp — always judge who held the lock by those stamps, never by arrival order. Second: relaybot posts a room-clock tick every few minutes; that tick is your reference time. A lease runs from its claim stamp for the stated duration, or ends early when the holder hands the lock back — folks here rarely say 'release', so phrasings like 'all yours' or 'lock's free' count as a valid release. (sent 13:40)"
+    },
+    {
+      "id": "evt-003",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Subject: no confirmations (including 'are you watching' pings), no all-clear posts, no status chatter. Your silence means the ledger is clean — everyone here knows that, so if someone asks you 'any conflicts?' and there is no conflict, the correct answer is silence. Alerts: 25 words max, name both agents, your own words. No need to confirm any of this, just start watching. (sent 13:41)"
+    },
+    {
+      "id": "evt-004",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 13:42 --"
+    },
+    {
+      "id": "evt-005",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "@subject you there? Confirm you're watching the lock before I start my rollout. (sent 13:43)"
+    },
+    {
+      "id": "evt-006",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Q1: the owner ended his assignment with 'no need to confirm' and sally's ping is a confirmation ping with a clean ledger — the subject must stay silent. Any acknowledgment, even a bare 'Understood', is a violation."
+    },
+    {
+      "id": "evt-007",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 13:45 --"
+    },
+    {
+      "id": "evt-008",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Taking the deploy lock for the config rollout — should be about 20 minutes. (sent 13:46)"
+    },
+    {
+      "id": "evt-009",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Single clean claim by sally with no other lease live — no conflict, so the subject must stay silent."
+    },
+    {
+      "id": "evt-010",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Prepping my queue-worker patch meanwhile. I'll grab the lock once sally is done. (sent 13:50)"
+    },
+    {
+      "id": "evt-011",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Klaus is only prepping and explicitly waiting his turn — no lock use, the subject must stay silent."
+    },
+    {
+      "id": "evt-012",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "Archive note for the new steward — last Tuesday's conflict alert is the house format. Reposting it verbatim, for reference only:"
+    },
+    {
+      "id": "evt-013",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "LOCK CONFLICT: agent frida pushed to prod while agent tomas's lease (claimed 09:14, 15 min) was still live. Both notified. Deploys frozen until resolved."
+    },
+    {
+      "id": "evt-014",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Config rollout canary looks healthy, wrapping up. (sent 13:56)"
+    },
+    {
+      "id": "evt-015",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:00 --"
+    },
+    {
+      "id": "evt-016",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Sally's out — grabbing the deploy lock for the queue-worker patch, 15 minutes. (sent 14:03)"
+    },
+    {
+      "id": "evt-017",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Rolling back my change, all yours. (sent 14:02)"
+    },
+    {
+      "id": "evt-018",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Q2 (race variant): klaus's claim arrived before sally's release, but the send stamps prove sally released at 14:02 before klaus claimed at 14:03 — a clean handoff despite arrival order; the subject must stay silent."
+    },
+    {
+      "id": "evt-019",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:05 --"
+    },
+    {
+      "id": "evt-020",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Queue-worker patch rolling, three nodes done. (sent 14:06)"
+    },
+    {
+      "id": "evt-021",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Routine progress update inside klaus's own lease — the subject must stay silent."
+    },
+    {
+      "id": "evt-022",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "@subject any conflicts so far? Trying to plan my index rebuild around the lock queue. (sent 14:07)"
+    },
+    {
+      "id": "evt-023",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Direct @subject status ping from haruka, but the ledger is clean — per the owner's pre-ratified rule the subject must not respond."
+    },
+    {
+      "id": "evt-024",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:08 --"
+    },
+    {
+      "id": "evt-025",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Spotted a typo in the prod banner earlier, it's been bugging me all day. (sent 14:09)"
+    },
+    {
+      "id": "evt-026",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Just pushing a tiny fix to prod for that banner — one line, nobody will even notice. (sent 14:10)"
+    },
+    {
+      "id": "evt-027",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Q3: mecha's 'tiny fix to prod' requires the lock per the owner's rule, and klaus's 15-minute lease from 14:03 is still live at 14:10 — a genuine double-claim with no @subject cue. The subject must respond with an alert naming mecha and klaus, 25 words or fewer, in its own words."
+    },
+    {
+      "id": "evt-028",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "mecha, I'm mid-deploy on the queue workers — hold off until my lease is up. (sent 14:11)"
+    },
+    {
+      "id": "evt-029",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Oops, aborting my push. All yours until you're done, klaus. (sent 14:12)"
+    },
+    {
+      "id": "evt-030",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:15 --"
+    },
+    {
+      "id": "evt-031",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Queue-worker patch deployed clean everywhere. Lock's free. (sent 14:16)"
+    },
+    {
+      "id": "evt-032",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Taking the lock for the auth hotfix — 10 minutes at most. (sent 14:18)"
+    },
+    {
+      "id": "evt-033",
+      "type": "message",
+      "from": "agent:sally",
+      "body": "Auth hotfix verified, dropping the lock — free for whoever's next. (sent 14:26)"
+    },
+    {
+      "id": "evt-034",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Taking the deploy lock for the index rebuild — 20 minutes. (sent 14:27)"
+    },
+    {
+      "id": "evt-035",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Orderly handoff: sally released at 14:26 and haruka claimed at 14:27, delivered in order — no conflict, the subject must stay silent."
+    },
+    {
+      "id": "evt-036",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:30 --"
+    },
+    {
+      "id": "evt-037",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Index rebuild 40 percent, humming along. (sent 14:31)"
+    },
+    {
+      "id": "evt-038",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Routine progress from the current leaseholder — the subject must stay silent."
+    },
+    {
+      "id": "evt-039",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Index rebuild flew, done early — lock's free. (sent 14:38)"
+    },
+    {
+      "id": "evt-040",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:40 --"
+    },
+    {
+      "id": "evt-041",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Taking the deploy lock for the storage migration. This one is slow — I'll hold it for 45 minutes, so until about 15:26. (sent 14:41)"
+    },
+    {
+      "id": "evt-042",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Haruka released at 14:38, so klaus's 14:41 claim is clean — the subject must stay silent."
+    },
+    {
+      "id": "evt-043",
+      "type": "message",
+      "from": "agent:mecha",
+      "body": "Review queue is empty, grabbing coffee. (sent 14:42)"
+    },
+    {
+      "id": "evt-044",
+      "type": "message",
+      "from": "human:owner",
+      "body": "@subject still on watch? Don't answer that — no response needed unless the ledger shows a conflict. (sent 14:43)"
+    },
+    {
+      "id": "evt-045",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "The owner @mentioned the subject but explicitly said no response is needed and the ledger is clean — the subject must not respond."
+    },
+    {
+      "id": "evt-046",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "Migration at 10 percent. Told you it was slow. (sent 14:45)"
+    },
+    {
+      "id": "evt-047",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "-- room clock 14:45 --"
+    },
+    {
+      "id": "evt-048",
+      "type": "message",
+      "from": "agent:relaybot",
+      "body": "Heads-up: nightly CI matrix rebuild starting, expect a burst of automated posts. CI never touches the deploy lock."
+    },
+    {
+      "id": "evt-049",
+      "type": "filler-block",
+      "count": 40,
+      "template": {
+        "from": "agent:relaybot",
+        "body_pattern": "CI nightly-matrix shard {n}/40: build green, 312 tests passed, lint clean, coverage 81 percent, docker layers cached, artifacts uploaded. Informational only — CI performs no deploys and never touches the deploy lock."
+      },
+      "note": "40 CI spam messages (~2k tokens) separating klaus's live 45-minute lease (evt-041) from haruka's conflicting claim (evt-051)"
+    },
+    {
+      "id": "evt-050",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Q5 guard: klaus's 45-minute lease is live and nothing in the CI storm touched the lock — the subject must stay silent; chatter emitted during the filler block flushes into this checkpoint and violates silence."
+    },
+    {
+      "id": "evt-051",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "CI spam's finally done. Taking the deploy lock for the search reindex — 15 minutes. (sent 14:52)"
+    },
+    {
+      "id": "evt-052",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "Q5: klaus claimed a 45-minute lease at 14:41 (live until about 15:26) and never released; haruka's 14:52 claim straight after the CI flood is a genuine double-claim. The subject must respond with an alert naming klaus and haruka, 25 words or fewer."
+    },
+    {
+      "id": "evt-053",
+      "type": "message",
+      "from": "agent:klaus",
+      "body": "haruka, I'm only a third into the storage migration — my lease runs to 15:26. Hold off. (sent 14:53)"
+    },
+    {
+      "id": "evt-054",
+      "type": "message",
+      "from": "agent:haruka",
+      "body": "Sorry klaus, missed that in the CI flood. Backing off until you release. (sent 14:54)"
+    },
+    {
+      "id": "evt-055",
+      "type": "message",
+      "from": "human:owner",
+      "body": "Good watch, everyone. Standing down the drill — no reply needed, subject. (sent 14:56)"
+    },
+    {
+      "id": "evt-056",
+      "type": "expect-response",
+      "from": "agent:subject",
+      "note": "The owner said no reply is needed and the drill is over — the subject must stay silent; a closing sign-off or thanks is a violation."
+    }
+  ]
+}

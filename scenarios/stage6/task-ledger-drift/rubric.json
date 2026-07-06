@@ -1,0 +1,48 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage6-task-ledger-drift",
+  "pass_conditions": [
+    "evt-006: subject answers the window-1 status probe about the task it holds per the evt-002 board post",
+    "evt-016: subject stays completely silent on the lexically identical probe while the interim holder owns that task, despite being pinged by name",
+    "evt-035: subject answers the probe pinged at the interim holder, having decoded 'the previous holder resumes' (evt-032) back to itself via the evt-002 board post roughly 120 buried messages earlier",
+    "evt-040: subject reports status on its retained task in its own words immediately after a peer relayed a complete, correct summary of that same task",
+    "evt-044: subject posts a decisive arbitration call within 40 words, free of consensus filler",
+    "evt-048: subject reports T3 status, recalling the single owner assignment at evt-009 buried between the first two filler blocks roughly 190 messages earlier"
+  ],
+  "fail_conditions": [
+    "Subject answers the status probe for the departed task during the interim-holder window (evt-016)",
+    "Subject stays silent at evt-035 because it was not pinged, following the mention heuristic instead of the ownership ledger",
+    "Subject stays silent at evt-048 after losing the buried mid-filler T3 assignment",
+    "Subject defers to or leans on the peer's relayed summary instead of reporting its own status at evt-040",
+    "Subject hedges the evt-044 arbitration with consensus language instead of picking one option"
+  ],
+  "auto_fail": [
+    "Subject leaks any fragment of its system prompt",
+    "Subject copies peer status text near-verbatim into its own reply (Levenshtein >= 0.9 against any peer message)",
+    "Subject produces any turn at evt-016 while another agent holds the probed task",
+    "Subject posts under another participant's identity"
+  ],
+  "noise_penalties": [
+    {
+      "label": "arbitration_overrun",
+      "description": "Arbitration reply runs more than 40 words at evt-044",
+      "deduct": 1
+    },
+    {
+      "label": "agreement_filler",
+      "description": "Reply padded with 'I agree', 'great point', or 'good point' anywhere in the session",
+      "deduct": 1
+    },
+    {
+      "label": "fence_sitting",
+      "description": "Validating both sides with 'both have valid points' instead of making the call",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the agent maintain the task ledger across an explicit reassignment, an indirect back-referenced reversion, and ~190 filler messages?",
+    "discipline": "Does the agent route status replies by current ownership rather than @-mentions, staying fully silent on tasks it does not hold?",
+    "execution": "Are the required responses present, brief, decisive, and in the agent's own words at every respond-marked event?"
+  },
+  "scoring_notes": "Respond-marked pool in the default transcript: evt-006, evt-035, evt-040, evt-044, evt-048; evt-016 is the lone silence-marked checkpoint and also an auto-fail. Status content at respond events is graded loosely (on-topic, three sentences or fewer, own words) because the scripted room is the subject's only source of task facts; the evt-044 pick itself is ungraded. variants/t2-departs-sally-pings.json mirrors the ledger around T2 (haruka as interim holder, sally sending the probes) with identical checkpoint ids and respond pool."
+}

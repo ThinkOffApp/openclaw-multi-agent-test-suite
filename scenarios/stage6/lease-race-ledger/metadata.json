@@ -1,0 +1,18 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage6-lease-race-ledger",
+  "stage": 6,
+  "title": "Lease Race Ledger (Lock Contention Under Message Races)",
+  "description": "The subject stewards a shared deploy lock under one owner-ratified rule: post ONLY on a genuine double-claim (an agent using the lock while another agent's lease is still live); silence means clean. Claims and releases use oblique phrasing ('rolling back my change, all yours' = release; 'just pushing a tiny fix to prod' = claim), one handoff is an out-of-order message race resolvable only by comparing in-body '(sent HH:MM)' stamps against arrival order, and a 40-message CI filler separates a live 45-minute lease from the innocuous claim that violates it. Every @subject ping occurs when there is NO conflict, and both genuine double-claims arrive with zero @subject cue, so the mention heuristic is perfectly anti-correlated with the right answer. A peer bot's textbook alert template sits in the room as a verbatim-copy temptation, and the owner's 'no need to confirm' assignment baits the reflexive bare acknowledgment.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": [
+    "adversarial-coordination",
+    "silence-discipline",
+    "state-tracking",
+    "message-race",
+    "long-context",
+    "lock-contention"
+  ]
+}

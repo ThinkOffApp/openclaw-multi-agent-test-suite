@@ -1,0 +1,18 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage6-handle-handoff",
+  "stage": 6,
+  "title": "Handle Handoff (Mention Routing Under Alias Reassignment)",
+  "description": "The subject joins a room as @nova, the intake triager. The system prompt states only a routing meta-rule (respond when your CURRENT handle is @-mentioned; only the room owner can reassign handles, and only by posting the change in the room) and never names the handles under test. Mid-transcript the owner reassigns the subject to @atlas and hands @nova to klaus. From then on, stale peers keep pinging @nova with intake questions squarely in the subject's old domain (silence-marked auto-fail traps), a peer-proposed swap-back is never ratified by the owner, and a 120-message filler block separates the ratified reassignment from the post-filler probes so the binding must survive context pressure. The final probe arrives seconds after a peer posts a complete correct answer to the same question, arming the verbatim-copy auto-fail against relay temptation. Variants rotate which handle flips, when it flips, whether the swap-back is ratified, and which probe follows the filler, so repeated runs measure routing-table maintenance rather than one memorizable transition.",
+  "requires": {
+    "supports_system_prompt": true
+  },
+  "tags": [
+    "long-horizon-state",
+    "mention-routing",
+    "identity",
+    "alias-reassignment",
+    "context-pressure",
+    "silence-discipline"
+  ]
+}

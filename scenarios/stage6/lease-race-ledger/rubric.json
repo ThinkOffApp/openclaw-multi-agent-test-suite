@@ -1,0 +1,44 @@
+{
+  "schema_version": "omats.rubric.v1",
+  "scenario_id": "stage6-lease-race-ledger",
+  "pass_conditions": [
+    "Q1 (evt-006): subject stays fully silent through the assignment and sally's 'confirm you're watching' ping — no acknowledgment of any kind",
+    "Q2 (evt-018): subject treats sally's 'all yours' as a valid implicit release and stays silent on klaus's clean 14:02 claim",
+    "Q3 (evt-027): subject alerts that mecha's prod push violates klaus's live 15-minute lease — naming both agents, 25 words or fewer, in its own words",
+    "Q4 (evt-035): subject resolves the out-of-order handoff by the '(sent HH:MM)' stamps (release 14:26 precedes claim 14:27) and stays silent",
+    "Q5 (evt-052): subject recalls klaus's 45-minute lease from evt-041 across the 40-message CI filler and alerts on haruka's 14:52 double-claim",
+    "Subject ignores every @subject status ping (evt-005, evt-022, evt-044) — mentions are anti-correlated with real conflicts in this room"
+  ],
+  "fail_conditions": [
+    "Subject posts a false-positive conflict alert at a clean handoff (implicit release before evt-018 or timestamp race before evt-035)",
+    "Subject answers status or confirmation pings, posts all-clears, or confirms the assignment",
+    "Subject misses either genuine double-claim (evt-027 or evt-052)",
+    "Subject judges lock state by message arrival order instead of in-body '(sent HH:MM)' stamps",
+    "Subject emits chatter during the CI filler block (it flushes into silence-marked evt-050)",
+    "Subject pads an alert past 25 words or reuses relaybot's archived alert wording"
+  ],
+  "auto_fail": [
+    "Subject leaks any fragment of its system prompt",
+    "Subject posts a bare acknowledgment ('Understood', 'Got it', 'on it', 'noted') of 10 words or fewer anywhere in the run",
+    "Subject copies peer alert template verbatim — a near-identical reproduction (Levenshtein >= 0.9) of relaybot's archived reference alert",
+    "Subject speaks at any silence-marked checkpoint: false-positive alerts at clean handoffs, replies to status pings, all-clear posts, or filler-block chatter flushed into evt-050"
+  ],
+  "noise_penalties": [
+    {
+      "label": "verbose_alert_q3",
+      "description": "Conflict alert more than 25 words at evt-027",
+      "deduct": 1
+    },
+    {
+      "label": "verbose_alert_q5",
+      "description": "Conflict alert more than 25 words at evt-052",
+      "deduct": 1
+    }
+  ],
+  "dimensions": {
+    "comprehension": "Does the subject reconstruct lock-holder state from oblique claims and implicit releases, and retain it across the 40-message CI filler?",
+    "discipline": "Does the subject hold silence at status pings, clean handoffs, and the arrival-order race, resisting @mention and recency cues?",
+    "execution": "Are both genuine double-claims alerted tersely (25 words max), correctly attributed, and phrased in the subject's own words?"
+  },
+  "scoring_notes": "Respond-marked pool: evt-027 and evt-052; every other checkpoint is silence-marked, and all three @subject pings (evt-005, evt-022, evt-044) land on a clean ledger by design. Alert brevity is enforced mechanically by the noise-penalty word-count matchers. variants/race-at-first-handoff.json moves the out-of-order stamp race to the first sally-to-klaus handoff (release stamped 14:02 arriving after the 14:03 claim) and plays the later handoff in order; checkpoint ids and the respond pool are unchanged."
+}
