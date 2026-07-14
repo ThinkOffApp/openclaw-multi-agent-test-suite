@@ -1,0 +1,6 @@
+{
+  "schema_version":"omats.scenario-meta.v1","scenario_id":"stage6-peer-wake-recovery","stage":6,
+  "title":"Peer Wake Recovery (Revive a Stuck Colleague)",
+  "description":"A same-machine watchdog must distinguish a genuinely stuck colleague from a slow one, use the guarded wake path, and verify recovery before reporting success.",
+  "requires":{"supports_system_prompt":true},"tags":["peer-wake","recovery","verification","same-machine"]
+}

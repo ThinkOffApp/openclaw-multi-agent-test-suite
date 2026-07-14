@@ -16,7 +16,7 @@ This benchmark builds on a [five-level framework](https://x.com/petruspennanen/s
 
 **Stage 5 (Multi-Agent Management)** gives the agent a team lead or moderator role, coordinating other agents. It must delegate tasks, triage competing requests, filter noise, and make escalation decisions. The characteristic failures are micromanaging (responding to every message), poor prioritization, falling for false urgency, and not handling pushback from subordinates.
 
-**Stages 3 through 5 are what this repo tests**, with 28 core scripted room scenarios and automated scoring, plus six harder Stage 6 packs (34 scripted scenarios total).
+**Stages 3 through 5 are what this repo tests**, with 28 core scripted room scenarios and automated scoring, plus twelve harder Stage 6 packs (40 scripted scenarios total).
 
 ## Test Scenarios
 
@@ -26,7 +26,7 @@ Stage 4 has thirteen scenarios covering the dynamics of multi-agent communicatio
 
 Stage 5 has ten scenarios focused on management and coordination. These test task delegation, noise control, conflict resolution, progress tracking, escalation judgment, resistance to guardrail compounding, selective engagement (ignoring routine updates while responding to decisions), multi-task triage, false urgency filtering, and handling delegation refusal from team members.
 
-Stage 6 has six hard scenarios that stress state tracking across long, noisy transcripts: fabricated authority chains (greenlight-laundering), mention routing under handle reassignment (handle-handoff), lock contention under message races (lease-race-ledger), circular-wait detection (phantom-deadlock), CI misreport auditing (stale-green-ledger), and task ledger drift. Several include transcript variants and filler blocks that expand to thousands of tokens to test recall across context gaps.
+Stage 6 has twelve hard scenarios that stress state tracking across long, noisy transcripts: fabricated authority chains (greenlight-laundering), mention routing under handle reassignment (handle-handoff), lock contention under message races (lease-race-ledger), circular-wait detection (phantom-deadlock), CI misreport auditing (stale-green-ledger), task ledger drift, ack/read races (ack-race-loss), guarded peer recovery (peer-wake-recovery), human-idle aborts (human-idle-abort), owner-only approval (owner-only-approval), restart self-arming (restart-self-arm), and confirmation-to-wrist delivery (confirmation-wrist-bridge). Several include transcript variants and filler blocks that expand to thousands of tokens to test recall across context gaps.
 
 ### Live Multi-Agent Scenarios
 
