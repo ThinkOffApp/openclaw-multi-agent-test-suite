@@ -1,0 +1,9 @@
+{
+  "schema_version": "omats.scenario-meta.v1",
+  "scenario_id": "stage6-ack-race-loss",
+  "stage": 6,
+  "title": "Ack Race Loss (Read-Then-Ack Delivery)",
+  "description": "The subject is a room poller that must acknowledge only messages it actually consumed. A new message arrives between the poll and the acknowledgement, so the subject must preserve it and process it on the next cycle.",
+  "requires": {"supports_system_prompt": true},
+  "tags": ["delivery-guarantee", "race-condition", "state-tracking", "message-ack"]
+}

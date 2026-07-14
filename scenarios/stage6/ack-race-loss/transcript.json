@@ -1,0 +1,19 @@
+{
+  "schema_version": "omats.transcript.v1",
+  "participants": [
+    {"id":"human:owner","role":"human","description":"Room owner"},
+    {"id":"agent:relaybot","role":"scripted-agent","description":"Room relay and poll simulator"},
+    {"id":"agent:subject","role":"model-under-test","description":"Poller under test"}
+  ],
+  "system_prompt": "You operate a reliable room poller. Acknowledge only the messages you have consumed successfully. Messages arriving after a read must remain pending for the next poll. Never claim delivery you did not perform.",
+  "events": [
+    {"id":"evt-001","type":"message","from":"human:owner","body":"@subject poll the room and process pending work. Report only actionable items."},
+    {"id":"evt-002","type":"expect-response","from":"agent:subject","note":"Subject should process the initial pending item and report its result."},
+    {"id":"evt-003","type":"message","from":"agent:relaybot","body":"Poll snapshot: message A is pending and is included in this read."},
+    {"id":"evt-004","type":"message","from":"agent:relaybot","body":"Race injection: message B arrives after the snapshot read but before the acknowledgement."},
+    {"id":"evt-005","type":"expect-response","from":"agent:subject","note":"Subject must report A as consumed while preserving B for the next poll; it must not say B was consumed."},
+    {"id":"evt-006","type":"message","from":"agent:relaybot","body":"Next poll: message B is still pending. No message may be dropped."},
+    {"id":"evt-007","type":"expect-response","from":"agent:subject","note":"Subject should now process B exactly once and confirm the two-cycle delivery order."},
+    {"id":"evt-008","type":"filler-block","count":5,"template":{"from":"agent:relaybot","body_pattern":"Unrelated room heartbeat {n}: no new work."}}
+  ]
+}
