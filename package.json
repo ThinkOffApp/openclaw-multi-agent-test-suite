@@ -4,6 +4,9 @@
   "private": false,
   "license": "AGPL-3.0-only",
   "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "validate": "node ./scripts/validate-scenarios.mjs",
     "run:mock": "node ./scripts/run-scenario.mjs --scenario scenarios/stage4/stop-order-compliance",

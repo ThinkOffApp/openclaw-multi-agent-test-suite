@@ -7,6 +7,14 @@ function execFileJson(file, args, timeoutMs) {
   return new Promise((resolve, reject) => {
     execFile(file, args, { timeout: timeoutMs, maxBuffer: 10 * 1024 * 1024 }, (error, stdout, stderr) => {
       if (error) {
+        if (error.code === 'ENOENT') {
+          reject(new Error(
+            `OpenClaw binary "${file}" not found on PATH. ` +
+            'This runner drives a live OpenClaw agent and requires an OpenClaw install ' +
+            '(see https://openclaw.ai). For a credential-free smoke run use "npm run suite" (mock plugin).'
+          ));
+          return;
+        }
         error.stdout = stdout;
         error.stderr = stderr;
         reject(error);

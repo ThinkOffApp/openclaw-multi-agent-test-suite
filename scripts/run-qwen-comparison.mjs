@@ -24,7 +24,8 @@ const args = parseArgs(process.argv.slice(2));
 
 const modelId = args.model;
 if (!modelId) {
-  console.error('Usage: node scripts/run-qwen-comparison.mjs --model qwen3-4b [--stage 3,4,5] [--output runs/qwen-4b]');
+  console.error('Usage: node scripts/run-qwen-comparison.mjs --model qwen3-4b [--api-key <key>] [--stage 3,4,5] [--output runs/qwen-4b]');
+  console.error('Requires --api-key or DASHSCOPE_API_KEY in the environment.');
   console.error('\nAvailable Qwen models on DashScope:');
   console.error('  qwen-max, qwen-plus, qwen3.5-27b, qwen3-8b, qwen3-4b');
   process.exit(1);
@@ -36,7 +37,7 @@ const stageFilter = args.stage
 const outputDir = args.output ? path.resolve(REPO_ROOT, args.output) : null;
 const runId = args['run-id'] || `${modelId}-${new Date().toISOString().replace(/[:.]/g, '-')}`;
 
-const plugin = createDashScopePlugin({ modelId });
+const plugin = createDashScopePlugin({ modelId, apiKey: args['api-key'] || process.env.DASHSCOPE_API_KEY });
 
 const capabilityProfile = {
   schema_version: 'omats.capability.v1',

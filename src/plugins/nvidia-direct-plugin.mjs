@@ -77,12 +77,15 @@ async function callNvidia(messages, modelId, apiKey, timeoutMs) {
 export function createNvidiaPlugin(options) {
   const {
     modelId,
-    apiKey = 'sk-fv6aLDtI0G0e2VE5PUvAKTnyV2PyWvLGEvYeP6Ji9Ozw5BBn',
+    apiKey = process.env.NVIDIA_API_KEY,
     timeoutMs = 60000
   } = options;
 
   if (!modelId) {
     throw new Error('createNvidiaPlugin requires modelId');
+  }
+  if (!apiKey) {
+    throw new Error('createNvidiaPlugin requires apiKey (pass apiKey or set NVIDIA_API_KEY)');
   }
 
   return {
