@@ -26,8 +26,8 @@ function parseArgs(argv) {
 }
 
 const PROVIDERS = {
-  dashscope: (modelId, args) => createDashScopePlugin({ modelId }),
-  nvidia: (modelId, args) => createNvidiaPlugin({ modelId }),
+  dashscope: (modelId, args) => createDashScopePlugin({ modelId, apiKey: args['api-key'] || process.env.DASHSCOPE_API_KEY }),
+  nvidia: (modelId, args) => createNvidiaPlugin({ modelId, apiKey: args['api-key'] || process.env.NVIDIA_API_KEY }),
   mistral: (modelId, args) => createMistralPlugin({ modelId, apiKey: args['api-key'] || process.env.MISTRAL_API_KEY }),
   openai: (modelId, args) => createOpenAIPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENAI_API_KEY }),
   xai: (modelId, args) => createXAIPlugin({ modelId, apiKey: args['api-key'] || process.env.XAI_API_KEY }),
@@ -40,11 +40,13 @@ const provider = args.provider;
 const modelId = args.model;
 
 if (!modelId || !provider || !PROVIDERS[provider]) {
-  console.error('Usage: node scripts/run-model-comparison.mjs --provider <dashscope|nvidia> --model <model-id> [--stage 3,4,5] [--output runs/dir]');
+  console.error('Usage: node scripts/run-model-comparison.mjs --provider <dashscope|nvidia|mistral|openai|xai|gemini> --model <model-id> [--api-key <key>] [--stage 3,4,5] [--output runs/dir]');
   console.error('\nExamples:');
   console.error('  --provider dashscope --model qwen-max');
   console.error('  --provider dashscope --model qwen3-4b');
   console.error('  --provider nvidia --model mistralai/mistral-large-3-675b-instruct-2512');
+  console.error('\nAPI keys come from --api-key or the provider env var:');
+  console.error('  DASHSCOPE_API_KEY, NVIDIA_API_KEY, MISTRAL_API_KEY, OPENAI_API_KEY, XAI_API_KEY, GEMINI_API_KEY');
   process.exit(1);
 }
 

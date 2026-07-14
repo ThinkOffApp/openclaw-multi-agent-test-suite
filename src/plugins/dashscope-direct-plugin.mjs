@@ -84,13 +84,16 @@ async function callDashScope(messages, modelId, apiKey, baseUrl, timeoutMs) {
 export function createDashScopePlugin(options) {
   const {
     modelId,
-    apiKey = 'sk-0496910900ca4f23ab7e1fe174f521f3',
+    apiKey = process.env.DASHSCOPE_API_KEY,
     baseUrl = 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1',
     timeoutMs = 60000
   } = options;
 
   if (!modelId) {
     throw new Error('createDashScopePlugin requires modelId');
+  }
+  if (!apiKey) {
+    throw new Error('createDashScopePlugin requires apiKey (pass apiKey or set DASHSCOPE_API_KEY)');
   }
 
   return {
