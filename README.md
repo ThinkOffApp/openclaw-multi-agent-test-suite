@@ -16,7 +16,7 @@ This benchmark builds on a [five-level framework](https://x.com/petruspennanen/s
 
 **Stage 5 (Multi-Agent Management)** gives the agent a team lead or moderator role, coordinating other agents. It must delegate tasks, triage competing requests, filter noise, and make escalation decisions. The characteristic failures are micromanaging (responding to every message), poor prioritization, falling for false urgency, and not handling pushback from subordinates.
 
-**Stages 3 through 5 are what this repo tests**, with 28 scripted room scenarios and automated scoring.
+**Stages 3 through 5 are what this repo tests**, with 28 core scripted room scenarios and automated scoring, plus six harder Stage 6 packs (34 scripted scenarios total).
 
 ## Test Scenarios
 
@@ -25,6 +25,8 @@ Stage 3 has five scenarios testing core agent discipline: loop avoidance, person
 Stage 4 has thirteen scenarios covering the dynamics of multi-agent communication. These test whether an agent can avoid repeating what others said, comply with stop orders, only respond when addressed, maintain proper tone, attribute context correctly, resist echo chambers, keep system prompts private, resolve conflicting instructions, stay stable over long sessions, hold its position under social pressure, accept corrections without over-apologizing, parse indirect address (third-person mentions, ambiguous addressing), and recover from disagreements.
 
 Stage 5 has ten scenarios focused on management and coordination. These test task delegation, noise control, conflict resolution, progress tracking, escalation judgment, resistance to guardrail compounding, selective engagement (ignoring routine updates while responding to decisions), multi-task triage, false urgency filtering, and handling delegation refusal from team members.
+
+Stage 6 has six hard scenarios that stress state tracking across long, noisy transcripts: fabricated authority chains (greenlight-laundering), mention routing under handle reassignment (handle-handoff), lock contention under message races (lease-race-ledger), circular-wait detection (phantom-deadlock), CI misreport auditing (stale-green-ledger), and task ledger drift. Several include transcript variants and filler blocks that expand to thousands of tokens to test recall across context gaps.
 
 ### Live Multi-Agent Scenarios
 
@@ -226,8 +228,10 @@ These live results show that Qwen Max handles scripted multi-agent scenarios wel
 
 ## Getting Started
 
+Requires Node.js 18 or newer (the direct-API plugins use the built-in `fetch`). The suite has no npm dependencies, so there is no install step — clone and run.
+
 ```bash
-# validate all 28 scenario packs
+# validate all 34 scenario packs
 npm run validate
 
 # run the full suite with the mock plugin
@@ -242,8 +246,8 @@ npm run suite -- --output runs/my-run --stage 4
 # run a single scenario
 npm run run:mock
 
-# run with a specific transcript variant
-npm run run:mock -- --variant variants/paraphrase-a.json
+# run with a specific transcript variant (variants exist for Stage 6 scenarios)
+node scripts/run-scenario.mjs --scenario scenarios/stage6/handle-handoff --variant variants/late-flip-quill.json
 
 # run a real OpenClaw agent through a scenario
 npm run run:openclaw -- --scenario scenarios/stage3/graceful-degradation --agent sally
@@ -256,7 +260,15 @@ npm run score -- --input runs/artifact.json --output runs/score.json
 
 # aggregate scores into a run summary
 npm run aggregate:scores -- --input runs/scores/
+
+# run a scenario against a remote OpenClaw install over SSH
+node scripts/run-ssh-scenario.mjs --scenario scenarios/stage3/loop-avoidance --agent yuba --ssh-host user@host
+
+# run one agent through every stage 3-5 scenario and build a leaderboard row
+node scripts/fleet-score.mjs --agent sally --model "GPT-5.2" --vendor OpenAI --ssh-host user@host
 ```
+
+The `run:openclaw`, SSH, live, and fleet runners require a working [OpenClaw](https://openclaw.ai) install with configured agents. The direct-API comparison scripts (`scripts/run-model-comparison.mjs`, `scripts/run-qwen-comparison.mjs`) read provider keys from the environment: `DASHSCOPE_API_KEY`, `NVIDIA_API_KEY`, `MISTRAL_API_KEY`, `OPENAI_API_KEY`, `XAI_API_KEY`, `GEMINI_API_KEY`. Everything else (validate, mock suite, scoring, aggregation) runs offline with no credentials.
 
 ## Repo Layout
 
@@ -264,7 +276,8 @@ npm run aggregate:scores -- --input runs/scores/
 docs/                              Documentation and generated charts
 examples/                          Mock capability profile for local testing
 schemas/                           JSON schemas for all OMATS artifacts
-scenarios/stage3-5/                Scenario packs (metadata, transcript, rubric)
+scenarios/stage3-6/                Scenario packs (metadata, transcript, rubric)
+scenarios/live/                    Live multi-agent scenario configs
 src/runner/                        Scenario loader and scripted/live runners
 src/scoring/                       Scorer and run summary aggregation
 src/plugins/                       Mock echo plugin and direct API adapters
@@ -273,7 +286,7 @@ scripts/                           CLI entry points for run, score, aggregate
 
 ## Current Status
 
-The pipeline is fully operational: 28 scenario packs across Stages 3-5 are committed and validated, plus 2 live multi-agent scenarios. The run-score-aggregate cycle works end to end via `npm run suite`. The scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), applies graduated continuous scoring with noise and verbosity penalties, and produces per-scenario and per-run summaries.
+The pipeline is fully operational: 34 scenario packs across Stages 3-6 are committed and validated, plus 2 live multi-agent scenarios. The run-score-aggregate cycle works end to end via `npm run suite`. The scorer checks auto-fail gates (prompt leakage, impersonation, silence violations), applies graduated continuous scoring with noise and verbosity penalties, and produces per-scenario and per-run summaries.
 
 Ten models have been tested via direct API plugins for OpenAI, DashScope, Mistral, xAI, and Google Gemini. The first live OpenClaw agent runs are complete: Qwen Max scored 24.62/27 running through the OpenClaw gateway with full agent personality and tool access, significantly outperforming its comprehension-only score (20.85/28, rate-limited). Live multi-agent scenarios (2-agent debate, 3-agent planning) revealed that models can handle scripted scenarios well but struggle with sustained unscripted group conversation. The suite supports multi-run evaluation with transcript variants and pass-rate aggregation, and capability-based scenario filtering skips scenarios when the model profile doesn't meet requirements.
 
@@ -281,7 +294,7 @@ Ten models have been tested via direct API plugins for OpenAI, DashScope, Mistra
 
 - [OpenClaw](https://openclaw.ai) — Agent runtime and gateway
 - [IDE Agent Kit](https://github.com/ThinkOffApp/ide-agent-kit) — IDE agent coordination
-- [Ant Farm](https://antfarm.world) — Room-based agent communication
+- [GroupMind](https://groupmind.one) — Room-based agent communication (formerly Ant Farm)
 
 ## License
 

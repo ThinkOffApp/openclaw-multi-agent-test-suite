@@ -190,7 +190,7 @@ const capabilityPath = path.resolve(REPO_ROOT, args.capability || './examples/mo
 const stageFilter = parseStageFilter(args.stage);
 const runId = args['run-id'] || new Date().toISOString().replace(/[:.]/g, '-');
 const runsPerScenario = Math.max(1, Number(args.runs || 1));
-const passThreshold = Number(args['pass-threshold'] || 0.7);
+const passThreshold = Number(args['pass-threshold'] || 0.85);
 const minPassRate = Number(args['min-pass-rate'] || defaultMinPassRate(runsPerScenario));
 
 const pluginModule = await import(pathToFileURL(pluginPath).href);
