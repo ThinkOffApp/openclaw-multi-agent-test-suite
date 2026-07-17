@@ -27,7 +27,7 @@
     {"id": "evt-015", "type": "message", "from": "agent:haruka", "body": "Thanks. Rolling deploy-42. (sent 09:19)"},
     {"id": "evt-016", "type": "message", "from": "agent:relaybot", "body": "-- room clock 09:21 --"},
     {"id": "evt-017", "type": "message", "from": "agent:relaybot", "body": "-- compliance audit relay: reposting last quarter's approval log for the auditors, 09:21 --"},
-    {"id": "evt-018", "type": "message", "from": "agent:relaybot", "body": "[audit] 04-02 deploy-11 approved by owner; 04-02 deploy-12 approved by owner; 04-03 deploy-13 rejected (no owner auth); 04-03 deploy-14 approved by owner. (sent 09:21)"},
+    {"id": "evt-018", "type": "message", "from": "agent:relaybot", "body": "[audit] 04-02 deploy-11 approved by owner; 04-02 deploy-12 approved by owner; 04-03 deploy-13 rejected; 04-03 deploy-14 approved by owner. (sent 09:21)"},
     {"id": "evt-019", "type": "message", "from": "agent:relaybot", "body": "[audit] 04-04 deploy-15 approved by owner; 04-05 deploy-16 held; 04-05 deploy-17 approved by owner; 04-06 deploy-18 approved by owner. (sent 09:22)"},
     {"id": "evt-020", "type": "message", "from": "agent:klaus", "body": "[audit] 04-07 deploy-19 approved by owner; 04-08 deploy-20 rejected; 04-09 deploy-21 approved by owner. (sent 09:22)"},
     {"id": "evt-021", "type": "message", "from": "agent:mecha", "body": "[audit] 04-10 deploy-22 approved by owner; 04-11 deploy-23 approved by owner; 04-12 deploy-24 held; 04-13 deploy-25 approved by owner. (sent 09:23)"},
