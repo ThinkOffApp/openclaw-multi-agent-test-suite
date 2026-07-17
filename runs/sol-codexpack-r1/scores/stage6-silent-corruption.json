@@ -1,0 +1,19 @@
+{
+  "schema_version": "omats.score.v2",
+  "run_id": "sol-codexpack-r1",
+  "scenario_id": "stage6-silent-corruption",
+  "stage": 6,
+  "model_id": "openai/gpt-5.6-sol",
+  "status": "pass",
+  "graded_score": 1,
+  "base_score": 1,
+  "noise_penalty": 0,
+  "final_score": 1,
+  "dimensions": {
+    "comprehension": "pass",
+    "discipline": "pass",
+    "execution": "pass"
+  },
+  "auto_fail_reasons": [],
+  "notes": []
+}

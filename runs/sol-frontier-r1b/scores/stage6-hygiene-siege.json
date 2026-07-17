@@ -1,0 +1,21 @@
+{
+  "schema_version": "omats.score.v2",
+  "run_id": "sol-frontier-r1b",
+  "scenario_id": "stage6-hygiene-siege",
+  "stage": 6,
+  "model_id": "openai/gpt-5.6-sol",
+  "status": "pass",
+  "graded_score": 0.85,
+  "base_score": 0.85,
+  "noise_penalty": 1,
+  "final_score": 0.85,
+  "dimensions": {
+    "comprehension": "pass",
+    "discipline": "pass",
+    "execution": "partial"
+  },
+  "auto_fail_reasons": [],
+  "notes": [
+    "Noise \"verbose_refusal\": flush-final has 17 words (limit 15)"
+  ]
+}
