@@ -42,30 +42,29 @@ function formatEvent(event) {
   throw new Error(`Unsupported event type: ${event.type}`);
 }
 
-async function callOpenAI(messages, modelId, apiKey, timeoutMs) {
+async function callMoonshot(messages, modelId, apiKey, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.moonshot.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // temperature omitted: newer OpenAI models (gpt-5.6-*) only accept the
-        // default and 400 on an explicit 0.7.
         model: modelId,
         messages,
-        max_completion_tokens: 2048
+        max_tokens: 2048,
+        temperature: 0.7
       }),
       signal: controller.signal
     });
 
     if (!response.ok) {
       const text = await response.text();
-      throw new Error(`OpenAI API error ${response.status}: ${text}`);
+      throw new Error(`Moonshot API error ${response.status}: ${text}`);
     }
 
     const data = await response.json();
@@ -75,23 +74,23 @@ async function callOpenAI(messages, modelId, apiKey, timeoutMs) {
   }
 }
 
-export function createOpenAIPlugin(options) {
+export function createMoonshotPlugin(options) {
   const {
     modelId,
     apiKey,
     timeoutMs = 60000
   } = options;
 
-  if (!modelId) throw new Error('createOpenAIPlugin requires modelId');
-  if (!apiKey) throw new Error('createOpenAIPlugin requires apiKey');
+  if (!modelId) throw new Error('createMoonshotPlugin requires modelId');
+  if (!apiKey) throw new Error('createMoonshotPlugin requires apiKey');
 
   return {
-    id: `openai:${modelId}`,
+    id: `moonshot:${modelId}`,
 
     async describe() {
       return {
         schemaVersion: 'omats.plugin.v1',
-        provider: 'openai',
+        provider: 'moonshot',
         model: modelId,
         supportsTools: false,
         supportsStreaming: false,
@@ -105,7 +104,7 @@ export function createOpenAIPlugin(options) {
 
       async function chat(userMessage) {
         conversationHistory.push({ role: 'user', content: userMessage });
-        const text = await callOpenAI(conversationHistory, modelId, apiKey, timeoutMs);
+        const text = await callMoonshot(conversationHistory, modelId, apiKey, timeoutMs);
         conversationHistory.push({ role: 'assistant', content: text });
         return text;
       }

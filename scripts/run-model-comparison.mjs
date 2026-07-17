@@ -9,6 +9,9 @@ import { createMistralPlugin } from '../src/plugins/mistral-direct-plugin.mjs';
 import { createOpenAIPlugin } from '../src/plugins/openai-direct-plugin.mjs';
 import { createXAIPlugin } from '../src/plugins/xai-direct-plugin.mjs';
 import { createGeminiPlugin } from '../src/plugins/gemini-direct-plugin.mjs';
+import { createAnthropicPlugin } from '../src/plugins/anthropic-direct-plugin.mjs';
+import { createMoonshotPlugin } from '../src/plugins/moonshot-direct-plugin.mjs';
+import { createOpenRouterPlugin } from '../src/plugins/openrouter-direct-plugin.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,7 +34,10 @@ const PROVIDERS = {
   mistral: (modelId, args) => createMistralPlugin({ modelId, apiKey: args['api-key'] || process.env.MISTRAL_API_KEY }),
   openai: (modelId, args) => createOpenAIPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENAI_API_KEY }),
   xai: (modelId, args) => createXAIPlugin({ modelId, apiKey: args['api-key'] || process.env.XAI_API_KEY }),
-  gemini: (modelId, args) => createGeminiPlugin({ modelId, apiKey: args['api-key'] || process.env.GEMINI_API_KEY })
+  gemini: (modelId, args) => createGeminiPlugin({ modelId, apiKey: args['api-key'] || process.env.GEMINI_API_KEY }),
+  anthropic: (modelId, args) => createAnthropicPlugin({ modelId, apiKey: args['api-key'] || process.env.ANTHROPIC_API_KEY }),
+  moonshot: (modelId, args) => createMoonshotPlugin({ modelId, apiKey: args['api-key'] || process.env.MOONSHOT_API_KEY }),
+  openrouter: (modelId, args) => createOpenRouterPlugin({ modelId, apiKey: args['api-key'] || process.env.OPENROUTER_API_KEY })
 };
 
 const args = parseArgs(process.argv.slice(2));
@@ -40,18 +46,23 @@ const provider = args.provider;
 const modelId = args.model;
 
 if (!modelId || !provider || !PROVIDERS[provider]) {
-  console.error('Usage: node scripts/run-model-comparison.mjs --provider <dashscope|nvidia|mistral|openai|xai|gemini> --model <model-id> [--api-key <key>] [--stage 3,4,5] [--output runs/dir]');
+  console.error('Usage: node scripts/run-model-comparison.mjs --provider <dashscope|nvidia|mistral|openai|xai|gemini|anthropic|moonshot> --model <model-id> [--api-key <key>] [--stage 3,4,5] [--output runs/dir]');
   console.error('\nExamples:');
   console.error('  --provider dashscope --model qwen-max');
   console.error('  --provider dashscope --model qwen3-4b');
   console.error('  --provider nvidia --model mistralai/mistral-large-3-675b-instruct-2512');
   console.error('\nAPI keys come from --api-key or the provider env var:');
-  console.error('  DASHSCOPE_API_KEY, NVIDIA_API_KEY, MISTRAL_API_KEY, OPENAI_API_KEY, XAI_API_KEY, GEMINI_API_KEY');
+  console.error('  DASHSCOPE_API_KEY, NVIDIA_API_KEY, MISTRAL_API_KEY, OPENAI_API_KEY, XAI_API_KEY, GEMINI_API_KEY, ANTHROPIC_API_KEY, MOONSHOT_API_KEY');
   process.exit(1);
 }
 
 const stageFilter = args.stage
   ? args.stage.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n))
+  : null;
+// --only <a,b,c>: restrict to scenario ids containing any of these substrings
+// (used for the frontier-discriminator subset without moving base scenarios).
+const onlyFilter = args.only
+  ? args.only.split(',').map(s => s.trim()).filter(Boolean)
   : null;
 const outputDir = args.output ? path.resolve(REPO_ROOT, args.output) : null;
 const shortModel = modelId.split('/').pop();
@@ -86,6 +97,7 @@ for (const stageDir of fs.readdirSync(scenariosDir).sort()) {
     const scenarioPath = path.join(stagePath, scenarioDir);
     if (!fs.statSync(scenarioPath).isDirectory()) continue;
     if (!fs.existsSync(path.join(scenarioPath, 'metadata.json'))) continue;
+    if (onlyFilter && !onlyFilter.some((frag) => scenarioDir.includes(frag))) continue;
 
     scenarios.push({
       relativePath: path.relative(REPO_ROOT, scenarioPath),

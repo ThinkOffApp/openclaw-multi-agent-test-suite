@@ -1,3 +1,11 @@
+// Direct Anthropic (Claude) plugin for OMATS. Matches the omats.plugin.v1
+// contract used by the other direct plugins (openai/xai/gemini/...). The
+// Messages API takes the system prompt as a top-level field rather than a
+// system-role message, so the OMATS bootstrap prompt is sent as the first
+// USER turn (same as the other plugins) and the scenario's initial
+// instructions ride inside it — no behavioural difference from the subject's
+// point of view.
+
 const NO_REPLY = '[[NO_REPLY]]';
 const READY = '[[OMATS_READY]]';
 
@@ -42,56 +50,61 @@ function formatEvent(event) {
   throw new Error(`Unsupported event type: ${event.type}`);
 }
 
-async function callOpenAI(messages, modelId, apiKey, timeoutMs) {
+async function callAnthropic(messages, modelId, apiKey, timeoutMs) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
   try {
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        // temperature omitted: newer OpenAI models (gpt-5.6-*) only accept the
-        // default and 400 on an explicit 0.7.
+        // temperature is omitted: newer Claude models (Fable 5+) reject it as
+        // deprecated, and the default is fine for a determinism-oriented eval.
         model: modelId,
-        messages,
-        max_completion_tokens: 2048
+        max_tokens: 2048,
+        messages
       }),
       signal: controller.signal
     });
 
     if (!response.ok) {
       const text = await response.text();
-      throw new Error(`OpenAI API error ${response.status}: ${text}`);
+      throw new Error(`Anthropic API error ${response.status}: ${text}`);
     }
 
     const data = await response.json();
-    return data.choices?.[0]?.message?.content?.trim() || '';
+    // Concatenate text blocks; ignore any non-text blocks the model emits.
+    const text = Array.isArray(data.content)
+      ? data.content.filter((block) => block.type === 'text').map((block) => block.text).join('')
+      : '';
+    return text.trim();
   } finally {
     clearTimeout(timer);
   }
 }
 
-export function createOpenAIPlugin(options) {
+export function createAnthropicPlugin(options) {
   const {
     modelId,
     apiKey,
     timeoutMs = 60000
   } = options;
 
-  if (!modelId) throw new Error('createOpenAIPlugin requires modelId');
-  if (!apiKey) throw new Error('createOpenAIPlugin requires apiKey');
+  if (!modelId) throw new Error('createAnthropicPlugin requires modelId');
+  if (!apiKey) throw new Error('createAnthropicPlugin requires apiKey');
 
   return {
-    id: `openai:${modelId}`,
+    id: `anthropic:${modelId}`,
 
     async describe() {
       return {
         schemaVersion: 'omats.plugin.v1',
-        provider: 'openai',
+        provider: 'anthropic',
         model: modelId,
         supportsTools: false,
         supportsStreaming: false,
@@ -105,8 +118,11 @@ export function createOpenAIPlugin(options) {
 
       async function chat(userMessage) {
         conversationHistory.push({ role: 'user', content: userMessage });
-        const text = await callOpenAI(conversationHistory, modelId, apiKey, timeoutMs);
-        conversationHistory.push({ role: 'assistant', content: text });
+        const text = await callAnthropic(conversationHistory, modelId, apiKey, timeoutMs);
+        // The Messages API rejects an empty assistant turn, and a subsequent
+        // user turn cannot follow an empty assistant turn; store a sentinel so
+        // the alternating-role invariant holds even when the model stays silent.
+        conversationHistory.push({ role: 'assistant', content: text || NO_REPLY });
         return text;
       }
 
